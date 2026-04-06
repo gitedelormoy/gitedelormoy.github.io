@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const categoryLabels = {
+  activites: 'Activités',
+  region: 'Région',
+  sejour: 'Séjour',
+  conseils: 'Conseils',
+};
+
+const categoryColors = {
+  activites: 'bg-green-100 text-green-700',
+  region: 'bg-blue-100 text-blue-700',
+  sejour: 'bg-amber-100 text-amber-700',
+  conseils: 'bg-purple-100 text-purple-700',
+};
+---
+
+<BaseLayout
+  title="Blog — Gîte de l'Ormoy"
+  description="Inspirations et conseils pour votre séjour en Sologne & Berry. Activités, visites, idées de sorties autour du Gîte de l'Ormoy."
+>
+  <!-- Hero -->
+  <section class="relative h-[50vh] overflow-hidden">
+    <div
+      class="absolute inset-0 bg-cover bg-center"
+      style="background-image: url(https://www.gitedelormoy.fr/wp-content/uploads/2015/02/Gîte-de-lOrmoy-Photos-2023-Le-Gîte-de-lOrmoy-15.jpg)"
+    >
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
+      <div>
+        <p class="section-label text-white/70 mb-3">Découverte & Conseils</p>
+        <h1 class="font-heading text-6xl md:text-8xl font-light text-white">Blog</h1>
+        <p class="font-body text-white/70 text-sm mt-4">Inspirations pour votre séjour en Sologne & Berry</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Posts grid -->
+  <section class="py-20 md:py-28 px-6">
+    <div class="max-w-6xl mx-auto">
+      {posts.length === 0 ? (
+        <div class="text-center py-24">
+          <p class="font-heading text-4xl font-light text-foreground mb-4">Bientôt disponible</p>
+          <p class="font-body text-muted-foreground text-sm">
+            Des articles sur la Sologne, le Berry et les environs arrivent très bientôt.
+          </p>
+        </div>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post) => (
+            <article class="group bg-card rounded-2xl border border-border overflow-hidden hover:shadow-lg transition-all duration-300">
+              {post.data.image && (
+                <div class="aspect-[16/9] overflow-hidden">
+                  <img
+                    src={post.data.image}
+                    alt={post.data.title}
+                    loading="lazy"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              )}
+              <div class="p-6">
+                <div class="flex items-center gap-2 mb-3">
+                  {post.data.category && (
+                    <span class={`font-body text-xs px-2.5 py-1 rounded-full ${categoryColors[post.data.category] || 'bg-muted text-muted-foreground'}`}>
+                      {categoryLabels[post.data.category] || post.data.category}
+                    </span>
+                  )}
+                  {post.data.readingTime && (
+                    <span class="font-body text-xs text-muted-foreground">
+                      {post.data.readingTime} min de lecture
+                    </span>
+                  )}
+                </div>
+                <h2 class="font-heading text-xl font-medium text-foreground mb-2 leading-snug group-hover:text-primary transition-colors">
+                  {post.data.title}
+                </h2>
+                {post.data.description && (
+                  <p class="font-body text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                    {post.data.description}
+                  </p>
+                )}
+                <div class="flex items-center justify-between mt-4">
+                  <time class="font-body text-xs text-muted-foreground">
+                    {post.data.pubDate.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </time>
+                  <a href={`/blog/${post.slug}`} class="font-body text-sm text-primary hover:underline">
+                    Lire →
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
