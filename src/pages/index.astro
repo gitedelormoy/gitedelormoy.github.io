@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/home/HeroSection.jsx';
+import IntroSection from '../components/home/IntroSection.jsx';
+import ServicesSection from '../components/home/ServicesSection.jsx';
+import TestimonialsSection from '../components/home/TestimonialsSection.jsx';
+import NearbySection from '../components/home/NearbySection.jsx';
+import CTASection from '../components/home/CTASection.jsx';
+---
+
+<BaseLayout title="Gîte de l'Ormoy — Meublé de tourisme 4★ en Sologne & Berry">
+  <HeroSection client:load />
+  <IntroSection />
+  <ServicesSection />
+  <NearbySection />
+  <TestimonialsSection client:load />
+  <CTASection />
+</BaseLayout>

@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const tarifs = [
+  {
+    season: "Basse saison",
+    period: "Novembre — Mars",
+    emoji: "🍂",
+    features: ["Séjour minimum 2 nuits", "Draps et linge fournis", "Ménage inclus", "Chauffage inclus"],
+    featured: false,
+  },
+  {
+    season: "Moyenne saison",
+    period: "Avril — Juin / Septembre — Octobre",
+    emoji: "🌸",
+    features: ["Séjour minimum 2 nuits", "Draps et linge fournis", "Ménage inclus", "Accès jardin & terrasse"],
+    featured: true,
+  },
+  {
+    season: "Haute saison",
+    period: "Juillet — Août / Vacances scolaires",
+    emoji: "☀️",
+    features: ["Séjour à la semaine", "Draps et linge fournis", "Ménage inclus", "Tous services inclus"],
+    featured: false,
+  },
+];
+---
+
+<BaseLayout
+  title="Tarifs — Gîte de l'Ormoy"
+  description="Tarifs du Gîte de l'Ormoy selon les saisons. Basse, moyenne et haute saison. Contactez-nous pour un devis personnalisé."
+>
+  <!-- Hero -->
+  <section class="relative h-[55vh] overflow-hidden">
+    <div
+      class="absolute inset-0 bg-cover bg-center"
+      style="background-image: url(https://www.gitedelormoy.fr/wp-content/uploads/2015/02/Gîte-de-lOrmoy-Photos-2023-Le-Gîte-de-lOrmoy-20.jpg)"
+    >
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
+      <div>
+        <p class="section-label text-white/70 mb-3">Réservation</p>
+        <h1 class="font-heading text-6xl md:text-8xl font-light text-white">Nos Tarifs</h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="py-16 px-6 text-center">
+    <div class="max-w-2xl mx-auto">
+      <p class="font-body text-muted-foreground leading-relaxed">
+        Contactez-nous pour obtenir les tarifs détaillés selon vos dates de séjour souhaitées.
+        Chaque devis est personnalisé en fonction de la période et de la durée de votre séjour.
+      </p>
+    </div>
+  </section>
+
+  <!-- Pricing cards -->
+  <section class="pb-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+        {tarifs.map((tarif) => (
+          <div class={`rounded-2xl p-8 border transition-all duration-300 ${
+            tarif.featured
+              ? 'bg-primary text-primary-foreground border-primary shadow-2xl scale-105'
+              : 'bg-card border-border hover:shadow-lg'
+          }`}>
+            <span class="text-3xl mb-4 block">{tarif.emoji}</span>
+            <h3 class="font-heading text-2xl font-medium mb-1">{tarif.season}</h3>
+            <p class={`font-body text-xs mb-6 ${tarif.featured ? 'opacity-70' : 'text-muted-foreground'}`}>
+              {tarif.period}
+            </p>
+            <p class="font-heading text-3xl font-semibold mb-6">Sur demande</p>
+            <ul class="space-y-3 mb-8">
+              {tarif.features.map((f) => (
+                <li class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={tarif.featured ? 'text-accent shrink-0' : 'text-primary shrink-0'}><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span class={`font-body text-sm ${tarif.featured ? 'opacity-90' : 'text-muted-foreground'}`}>{f}</span>
+                </li>
+              ))}
+            </ul>
+            <a
+              href="/contact"
+              class={`block text-center px-6 py-3 rounded-full font-body font-medium text-sm transition-all duration-300 ${
+                tarif.featured
+                  ? 'bg-primary-foreground text-primary hover:bg-primary-foreground/90'
+                  : 'bg-primary text-primary-foreground hover:bg-primary/90'
+              }`}
+            >
+              Demander un devis
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Inclus section -->
+  <section class="py-16 px-6 bg-muted/50">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="font-heading text-3xl font-light text-foreground mb-10">Toujours inclus</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {["Draps & linge", "Ménage final", "Accès jardin", "Parking gratuit"].map((item) => (
+          <div class="py-5 px-4 rounded-xl bg-card border border-border font-body text-sm text-foreground text-center">
+            ✓ {item}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

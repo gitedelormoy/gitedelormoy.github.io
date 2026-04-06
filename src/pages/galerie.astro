@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GalerieGrid from '../components/GalerieGrid.jsx';
+
+const images = [
+  {
+    src: "https://www.gitedelormoy.fr/wp-content/uploads/2023/08/Gîte-de-lOrmoy-Photos-2023-Le-Gîte-de-lOrmoy-6.jpg",
+    alt: "Extérieur du gîte",
+  },
+  {
+    src: "https://www.gitedelormoy.fr/wp-content/uploads/2023/08/Gîte-de-lOrmoy-Photos-2023-Le-Gîte-de-lOrmoy-12.jpg",
+    alt: "Chambre principale",
+  },
+  {
+    src: "https://www.gitedelormoy.fr/wp-content/uploads/2015/02/Gîte-de-lOrmoy-Photos-2023-Le-Gîte-de-lOrmoy-15.jpg",
+    alt: "Vue sur le domaine",
+  },
+  {
+    src: "https://www.gitedelormoy.fr/wp-content/uploads/2015/02/Gîte-de-lOrmoy-Photos-2023-Le-Gîte-de-lOrmoy-20.jpg",
+    alt: "Détails historiques",
+  },
+  {
+    src: "https://www.gitedelormoy.fr/wp-content/uploads/2023/08/Gîte-de-lOrmoy-Photos-2023-Le-Gîte-de-lOrmoy-8.jpg",
+    alt: "Salon et véranda",
+  },
+];
+---
+
+<BaseLayout
+  title="Galerie — Gîte de l'Ormoy"
+  description="Découvrez en images le Gîte de l'Ormoy : chambres, véranda, jardin et espaces extérieurs de ce meublé de tourisme 4 étoiles en Sologne."
+>
+  <!-- Hero -->
+  <section class="relative h-[55vh] overflow-hidden">
+    <div
+      class="absolute inset-0 bg-cover bg-center"
+      style="background-image: url(https://www.gitedelormoy.fr/wp-content/uploads/2023/08/Gîte-de-lOrmoy-Photos-2023-Le-Gîte-de-lOrmoy-6.jpg)"
+    >
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
+      <div>
+        <p class="section-label text-white/70 mb-3">Photos</p>
+        <h1 class="font-heading text-6xl md:text-8xl font-light text-white">Galerie</h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grid with lightbox (React island) -->
+  <section class="py-20 md:py-28 px-6">
+    <div class="max-w-6xl mx-auto">
+      <GalerieGrid images={images} client:load />
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 px-6 bg-muted/50 text-center">
+    <p class="font-body text-muted-foreground mb-6 text-sm">Vous souhaitez séjourner dans ce cadre ?</p>
+    <a href="/contact" class="btn-primary">Demander une réservation</a>
+  </section>
+</BaseLayout>

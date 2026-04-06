@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { BedDouble, Sun, TreePine, Home } from 'lucide-react';
+
+const rooms = [
+  {
+    name: "La Suite Parentale",
+    description: "Chambre spacieuse avec lit double, décorée dans des tons apaisants avec vue sur le jardin.",
+    detail: "Lit 160cm",
+  },
+  {
+    name: "La Chambre Lumière",
+    description: "Chambre lumineuse et chaleureuse, idéale pour un séjour reposant.",
+    detail: "Lit 140cm · Accès de plain-pied",
+  },
+  {
+    name: "La Chambre Nature",
+    description: "Chambre aux couleurs de la nature, parfaite pour les enfants ou un couple.",
+    detail: "2 lits 90cm",
+  },
+];
+
+const amenities = [
+  "Véranda contemporaine", "Cuisine entièrement équipée", "Salon confortable",
+  "Canapé-lit 140cm", "Salle de bain moderne", "Terrasse privée",
+  "Jardin clos", "Parking gratuit", "Barbecue",
+  "WiFi Fibre haut débit", "Draps et serviettes fournis", "Ménage inclus",
+];
+---
+
+<BaseLayout
+  title="Le Gîte — Gîte de l'Ormoy"
+  description="Découvrez la Maison de Gardien du Château de l'Ormoy : 3 chambres, 6 couchages, véranda contemporaine. Meublé de tourisme 4 étoiles en Sologne."
+>
+  <!-- Hero -->
+  <section class="relative h-[60vh] overflow-hidden">
+    <div
+      class="absolute inset-0 bg-cover bg-center"
+      style="background-image: url(https://www.gitedelormoy.fr/wp-content/uploads/2023/08/Gîte-de-lOrmoy-Photos-2023-Le-Gîte-de-lOrmoy-12.jpg)"
+    >
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
+      <div>
+        <p class="section-label text-white/70 mb-3">Découvrir</p>
+        <h1 class="font-heading text-6xl md:text-8xl font-light text-white">Le Gîte</h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- Description -->
+  <section class="py-24 md:py-32 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-primary mx-auto mb-6"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <h2 class="font-heading text-4xl md:text-5xl font-light text-foreground mb-8">Un cocon de charme</h2>
+      <p class="font-body text-muted-foreground leading-relaxed text-lg max-w-2xl mx-auto mb-6">
+        La Maison de Gardien du Château de L'Ormoy est un joyau préservé, témoignant de l'histoire
+        à travers les âges. Les propriétaires ont métamorphosé cette bâtisse en un gîte au charme
+        indéniable, grâce à une restauration minutieuse.
+      </p>
+      <p class="font-body text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+        Chaque détail a été soigneusement pensé pour créer un environnement accueillant où le confort
+        moderne se marie avec l'authenticité. Imprégnez-vous de l'atmosphère chargée d'histoire,
+        tandis que chaque coin raconte une histoire.
+      </p>
+    </div>
+  </section>
+
+  <!-- Rooms -->
+  <section class="py-20 bg-muted/50 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <p class="section-label mb-3">Hébergement</p>
+        <h2 class="font-heading text-4xl md:text-5xl font-light text-foreground">3 chambres · 6 couchages</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {rooms.map((room) => (
+          <div class="bg-card rounded-2xl p-8 border border-border shadow-sm hover:shadow-md transition-shadow duration-300">
+            <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M2 4v16"></path><path d="M2 8h18a2 2 0 0 1 2 2v10"></path><path d="M2 17h20"></path><path d="M6 8v9"></path></svg>
+            </div>
+            <h3 class="font-heading text-xl font-medium text-foreground mb-2">{room.name}</h3>
+            <p class="font-body text-sm text-muted-foreground leading-relaxed mb-4">{room.description}</p>
+            <span class="font-body text-xs bg-primary/10 text-primary px-3 py-1 rounded-full">{room.detail}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Amenities -->
+  <section class="py-24 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="font-heading text-4xl md:text-5xl font-light text-foreground mb-14">Équipements</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {amenities.map((a) => (
+          <div class="py-4 px-3 rounded-xl bg-muted/60 font-body text-sm text-foreground">{a}</div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 px-6 bg-primary text-primary-foreground text-center">
+    <h2 class="font-heading text-3xl md:text-4xl font-light mb-4">Envie de séjourner chez nous ?</h2>
+    <p class="font-body text-primary-foreground/80 mb-8 max-w-md mx-auto text-sm">
+      Contactez-nous pour connaître les disponibilités et organiser votre séjour.
+    </p>
+    <a
+      href="/contact"
+      class="inline-block px-8 py-3.5 bg-primary-foreground text-primary rounded-full font-body font-medium text-sm hover:bg-primary-foreground/90 transition-all duration-300"
+    >
+      Demander une réservation
+    </a>
+  </section>
+</BaseLayout>

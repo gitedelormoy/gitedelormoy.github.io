@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const services = [
+  { emoji: "📶", label: "WiFi Fibre haut débit", desc: "Restez connecté avec une connexion internet rapide et fiable." },
+  { emoji: "📺", label: "Télévisions", desc: "Équipements multimédia dans les espaces de vie." },
+  { emoji: "🍳", label: "Cuisine entièrement équipée", desc: "Lave-vaisselle, four, micro-ondes et tout le nécessaire." },
+  { emoji: "👕", label: "Lave linge", desc: "Machine à laver à disposition pour votre confort." },
+  { emoji: "🚲", label: "Vélos", desc: "Vélos mis à disposition pour explorer les alentours." },
+  { emoji: "🐴", label: "Accueil équestre", desc: "Possibilité d'accueillir vos chevaux sur place." },
+  { emoji: "🚗", label: "Parking gratuit", desc: "Place de stationnement privée devant le gîte." },
+  { emoji: "🔥", label: "Barbecue", desc: "Profitez du barbecue en terrasse lors des beaux jours." },
+  { emoji: "🌳", label: "Jardin clos", desc: "Grand jardin privatif avec espaces ombragés." },
+  { emoji: "👶", label: "Équipement bébé", desc: "Lit bébé et chaise haute disponibles sur demande." },
+  { emoji: "📖", label: "Documentation locale", desc: "Guides et cartes pour découvrir la région." },
+  { emoji: "🐾", label: "Animaux bienvenus", desc: "Vos compagnons à quatre pattes sont les bienvenus." },
+  { emoji: "🛏️", label: "Draps & linge fournis", desc: "Draps, serviettes et linge de maison inclus." },
+  { emoji: "✨", label: "Ménage inclus", desc: "Ménage final inclus dans tous les séjours." },
+  { emoji: "🌿", label: "Véranda contemporaine", desc: "Espace de vie lumineux ouvert sur le jardin." },
+];
+---
+
+<BaseLayout
+  title="Services & Équipements — Gîte de l'Ormoy"
+  description="WiFi fibre, cuisine équipée, vélos, accueil équestre, jardin clos... Découvrez tous les services inclus dans votre séjour au Gîte de l'Ormoy."
+>
+  <!-- Hero -->
+  <section class="relative h-[55vh] overflow-hidden">
+    <div
+      class="absolute inset-0 bg-cover bg-center"
+      style="background-image: url(https://www.gitedelormoy.fr/wp-content/uploads/2023/08/Gîte-de-lOrmoy-Photos-2023-Le-Gîte-de-lOrmoy-8.jpg)"
+    >
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
+      <div>
+        <p class="section-label text-white/70 mb-3">Confort</p>
+        <h1 class="font-heading text-6xl md:text-8xl font-light text-white">Nos Services</h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="py-16 px-6 text-center">
+    <div class="max-w-2xl mx-auto">
+      <p class="font-body text-muted-foreground leading-relaxed">
+        Nous avons tout prévu pour que votre séjour soit parfait, dès votre arrivée.
+        Chaque équipement a été choisi pour allier confort moderne et atmosphère authentique.
+      </p>
+    </div>
+  </section>
+
+  <!-- Services grid -->
+  <section class="pb-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {services.map((service) => (
+          <div class="p-8 rounded-2xl bg-card border border-border hover:border-primary/20 hover:shadow-lg transition-all duration-300 group">
+            <span class="text-3xl mb-5 block">{service.emoji}</span>
+            <h3 class="font-heading text-xl font-medium text-foreground mb-2">{service.label}</h3>
+            <p class="font-body text-sm text-muted-foreground leading-relaxed">{service.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 px-6 bg-primary text-primary-foreground text-center">
+    <h2 class="font-heading text-3xl font-light mb-4">Des questions sur les équipements ?</h2>
+    <p class="font-body text-primary-foreground/80 mb-8 text-sm max-w-md mx-auto">
+      N'hésitez pas à nous contacter, nous serons ravis de répondre à toutes vos demandes.
+    </p>
+    <a
+      href="/contact"
+      class="inline-block px-8 py-3.5 bg-primary-foreground text-primary rounded-full font-body font-medium text-sm hover:bg-primary-foreground/90 transition-all duration-300"
+    >
+      Nous contacter
+    </a>
+  </section>
+</BaseLayout>
