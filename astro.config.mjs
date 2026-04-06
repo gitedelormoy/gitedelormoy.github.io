@@ -3,7 +3,8 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  site: 'https://www.gitedelormoy.fr',
+  site: 'https://gitedelormoy.github.io',
+  base: '/gite',
   integrations: [
     react(),
     tailwind({ applyBaseStyles: false }),
