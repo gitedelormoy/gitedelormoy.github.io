@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 export default function CTASection() {
@@ -25,7 +26,7 @@ export default function CTASection() {
           sur mesure au cœur de la Sologne.
         </p>
         <a
-          href="/contact"
+          href="/reserver"
           className="inline-block px-10 py-4 bg-white text-foreground rounded-full font-body font-medium tracking-wide hover:bg-white/90 transition-all duration-300 shadow-lg text-sm"
         >
           Demander une réservation
