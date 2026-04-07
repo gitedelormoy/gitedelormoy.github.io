@@ -71,12 +71,7 @@ export default function CalendrierPublic() {
   for (let i = 0; i < firstDay; i++) cells.push(null);
   for (let d = 1; d <= daysInMonth; d++) cells.push(d);
 
-  const SOURCE_COLORS = {
-    airbnb: '#E67C73',
-    booking: '#F6BF26',
-    direct: '#2D5A3D',
-    blocked: '#9E9E9E',
-  };
+  const BLOCKED_COLOR = '#2D5A3D';
 
   return (
     <div className="max-w-3xl mx-auto">
@@ -143,8 +138,8 @@ export default function CalendrierPublic() {
                     : 'text-foreground hover:bg-muted/60'
                   }
                 `}
-                style={blocked ? { backgroundColor: SOURCE_COLORS[resa?.source] || SOURCE_COLORS.blocked } : {}}
-                title={blocked && resa ? `${resa.label || 'Réservé'} (${resa.source})` : ''}
+                style={blocked ? { backgroundColor: BLOCKED_COLOR } : {}}
+                
               >
                 {day}
               </div>
@@ -154,32 +149,16 @@ export default function CalendrierPublic() {
       )}
 
       {/* Légende */}
-      <div className="flex flex-wrap justify-center gap-5 mt-6 font-body text-xs text-muted-foreground">
+      <div className="flex justify-center gap-6 mt-6 font-body text-xs text-muted-foreground">
         <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-sm inline-block" style={{ background: SOURCE_COLORS.direct }} />
-          Réservation directe
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-sm inline-block" style={{ background: SOURCE_COLORS.airbnb }} />
-          Airbnb
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-sm inline-block" style={{ background: SOURCE_COLORS.booking }} />
-          Booking
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-sm inline-block" style={{ background: SOURCE_COLORS.blocked }} />
-          Bloqué
+          <span className="w-3 h-3 rounded-sm inline-block" style={{ background: BLOCKED_COLOR }} />
+          Réservé
         </div>
         <div className="flex items-center gap-1.5">
           <span className="w-3 h-3 rounded-sm border border-border inline-block bg-card" />
           Disponible
         </div>
       </div>
-
-      <p className="font-body text-xs text-muted-foreground text-center mt-3">
-        🔄 Synchronisé en temps réel
-      </p>
     </div>
   );
 }
