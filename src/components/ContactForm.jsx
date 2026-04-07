@@ -75,12 +75,28 @@ export default function ContactForm() {
 
   // Charger Zone B + Zone C et fusionner
   useEffect(() => {
-    const PROXY = 'https://api.allorigins.win/raw?url=';
+    // Essai avec plusieurs proxies CORS en cascade
+    const PROXIES = [
+      'https://corsproxy.io/?',
+      'https://api.allorigins.win/raw?url=',
+      'https://cors-anywhere.herokuapp.com/',
+    ];
     const urls = [
       'https://fr.ftp.opendatasoft.com/openscol/fr-en-calendrier-scolaire/Zone-B.ics',
       'https://fr.ftp.opendatasoft.com/openscol/fr-en-calendrier-scolaire/Zone-C.ics',
     ];
-    Promise.all(urls.map(u => fetch(PROXY + encodeURIComponent(u)).then(r => r.text())))
+
+    const fetchWithFallback = async (url) => {
+      for (const proxy of PROXIES) {
+        try {
+          const res = await fetch(proxy + encodeURIComponent(url));
+          if (res.ok) return res.text();
+        } catch {}
+      }
+      throw new Error('All proxies failed');
+    };
+
+    Promise.all(urls.map(u => fetchWithFallback(u)))
       .then(([icsB, icsC]) => {
         const eventsB = parseICS(icsB).filter(e => isMoyenne(e.summary));
         const eventsC = parseICS(icsC).filter(e => isMoyenne(e.summary));
@@ -155,7 +171,10 @@ export default function ContactForm() {
     const saison = getSaison(d1);
     let base = 0;
 
-    if (nuits >= 7) {
+    if (saison === 'haute') {
+      // Haute saison : toujours 930€ (tarif semaine fixe, minimum 6 nuits)
+      base = TARIFS.semaine.haute;
+    } else if (nuits >= 7) {
       base = TARIFS.semaine[saison];
     } else if (TARIFS.nuits[nuits]) {
       base = TARIFS.nuits[nuits][saison];
