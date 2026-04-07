@@ -38,7 +38,7 @@ export default function HeroSection() {
 
         <div className="mt-10 flex flex-col sm:flex-row gap-4 opacity-0 animate-[fadeUp_1s_ease_0.9s_forwards]">
           <a
-            href="/contact"
+            href="/reserver"
             className="px-8 py-3.5 bg-white text-foreground font-body font-medium text-sm rounded-full hover:bg-white/90 transition-all duration-300 tracking-wide shadow-lg"
           >
             Réserver un séjour
