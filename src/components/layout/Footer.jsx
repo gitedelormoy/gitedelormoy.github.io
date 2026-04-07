@@ -8,7 +8,8 @@ const navLinks = [
   { label: 'Services', path: '/services' },
   { label: 'Tarifs', path: '/tarifs' },
   { label: 'Blog', path: '/blog' },
-  { label: 'Contact', path: '/contact' },
+  { label: 'Réserver', path: '/reserver' },
+  { label: 'Réserver', path: '/reserver' },
 ];
 
 export default function Footer() {
