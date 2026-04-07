@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.jsx';
+---
+
+<BaseLayout
+  title="Réserver — Gîte de l'Ormoy"
+  description="Réservez votre séjour au Gîte de l'Ormoy. Vérifiez les disponibilités et contactez-nous pour organiser votre escapade en Sologne & Berry."
+>
+  <!-- Hero -->
+  <section class="relative h-[50vh] overflow-hidden">
+    <div
+      class="absolute inset-0 bg-cover bg-center"
+      style="background-image: url(https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496829/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--4-min_ks62ta.jpg)"
+    >
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
+      <div>
+        <p class="section-label text-white/70 mb-3">Disponibilités</p>
+        <h1 class="font-heading text-6xl md:text-8xl font-light text-white">Réserver</h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendrier + Formulaire -->
+  <section class="py-20 md:py-28 px-6">
+    <div class="max-w-6xl mx-auto space-y-20">
+
+      <!-- Calendrier des disponibilités -->
+      <div>
+        <div class="text-center mb-10">
+          <p class="section-label mb-3">Disponibilités</p>
+          <h2 class="font-heading text-3xl md:text-4xl font-light text-foreground mb-3">
+            Calendrier
+          </h2>
+          <p class="font-body text-muted-foreground text-sm max-w-md mx-auto">
+            Les dates en gris sont déjà réservées. Synchronisé avec Booking et Airbnb.
+          </p>
+        </div>
+
+        <!-- Placeholder calendrier — à remplacer par widget Lodgify / Smoobu / iCal -->
+        <div class="max-w-3xl mx-auto bg-card rounded-2xl border border-border p-8 text-center">
+          <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          </div>
+          <h3 class="font-heading text-2xl font-light text-foreground mb-3">
+            Calendrier des disponibilités
+          </h3>
+          <p class="font-body text-muted-foreground text-sm leading-relaxed mb-6 max-w-sm mx-auto">
+            Le calendrier synchronisé avec Booking et Airbnb sera intégré ici.<br />
+            En attendant, contactez-nous directement via le formulaire ci-dessous.
+          </p>
+          <div class="grid grid-cols-3 gap-3 text-xs font-body max-w-xs mx-auto">
+            <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-sm bg-primary inline-block"></span> Disponible</div>
+            <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-sm bg-muted border border-border inline-block"></span> Réservé</div>
+            <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-sm bg-accent inline-block"></span> Sélectionné</div>
+          </div>
+
+          <!-- Note d'intégration (invisible sur le site, juste pour toi) -->
+          <!-- 
+            INTÉGRATION CALENDRIER :
+            Option 1 — Smoobu (payant, synchronise Airbnb + Booking automatiquement)
+              → smoobu.com → Widget de disponibilités → coller le code iframe ici
+            Option 2 — iCal simple (gratuit)
+              → Récupérer les liens iCal depuis Airbnb et Booking
+              → Intégrer avec un widget comme cal.com ou similar
+            Option 3 — Lodgify / Hostaway
+              → Solutions tout-en-un avec widget calendrier
+          -->
+        </div>
+      </div>
+
+      <!-- Séparateur -->
+      <div class="flex items-center gap-6">
+        <div class="flex-1 border-t border-border"></div>
+        <p class="font-heading text-lg font-light text-muted-foreground italic">ou contactez-nous directement</p>
+        <div class="flex-1 border-t border-border"></div>
+      </div>
+
+      <!-- Formulaire + Infos -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+
+        <!-- Info -->
+        <div>
+          <h2 class="font-heading text-3xl md:text-4xl font-light text-foreground mb-6">
+            Demande de réservation
+          </h2>
+          <p class="font-body text-muted-foreground leading-relaxed mb-10">
+            Remplissez le formulaire avec vos dates souhaitées et nous vous répondrons
+            dans les 24–48h pour confirmer les disponibilités et convenir du tarif.
+          </p>
+
+          <div class="space-y-6">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div>
+                <p class="font-body font-medium text-foreground text-sm">Adresse</p>
+                <p class="font-body text-muted-foreground text-sm mt-1">
+                  Château de l'Ormoy, Saint Laurent<br />près de Vierzon, Centre-Val de Loire
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </div>
+              <div>
+                <p class="font-body font-medium text-foreground text-sm">Email</p>
+                <a href="mailto:contact@gitedelormoy.fr" class="font-body text-primary text-sm mt-1 hover:underline block">
+                  contact@gitedelormoy.fr
+                </a>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.4a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </div>
+              <div>
+                <p class="font-body font-medium text-foreground text-sm">Réponse garantie</p>
+                <p class="font-body text-muted-foreground text-sm mt-1">Sous 24–48h</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Carte -->
+          <div class="mt-10 rounded-2xl overflow-hidden border border-border h-56">
+            <iframe
+              title="Localisation Gîte de l'Ormoy"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=2.06%2C47.17%2C2.18%2C47.23&layer=mapnik&marker=47.2012%2C2.1245"
+              class="w-full h-full"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+
+        <!-- Formulaire -->
+        <div>
+          <ContactForm client:load />
+        </div>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>
