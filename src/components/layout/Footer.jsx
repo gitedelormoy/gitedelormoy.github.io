@@ -53,7 +53,7 @@ export default function Footer() {
             <div className="space-y-3 font-body text-sm">
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 mt-0.5 opacity-80 shrink-0" />
-                <span className="opacity-80">1 Route de Mehun,18330 Saint Laurent<br></span>
+               <span className="opacity-80">1 Route de Mehun, 18330 Saint Laurent<br /></span>
               </div>
               <a
                 href="mailto:contact@gitedelormoy.fr"
