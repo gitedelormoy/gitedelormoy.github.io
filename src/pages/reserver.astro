@@ -57,7 +57,7 @@ import ContactForm from '../components/ContactForm.jsx';
           <!-- Iframe Google Calendar -->
           <div class="rounded-2xl overflow-hidden border border-border shadow-sm">
             <iframe
-              src="https://calendar.google.com/calendar/embed?src=25b3de2e74ffffd444d1f2ab180d0a594ec8d7d404dd153a331a7d493570c424%40group.calendar.google.com&ctz=Europe%2FParis&mode=MONTH&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&bgcolor=%23f5f0e8&color=%232d5a3d"
+              src="https://calendar.google.com/calendar/embed?src=25b3de2e74ffffd444d1f2ab180d0a594ec8d7d404dd153a331a7d493570c424%40group.calendar.google.com&src=https%3A%2F%2Fical.booking.com%2Fv1%2Fexport%3Ft%3D65fb0d40-ba23-440d-953f-2685a2b18eb0&src=https%3A%2F%2Fwww.airbnb.fr%2Fcalendar%2Fical%2F7268032.ics%3Ft%3Dcab18de279ac4a39a295599ff51f4602&ctz=Europe%2FParis&mode=MONTH&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&color=%232D5A3D"
               style="border:0"
               width="100%"
               height="500"
@@ -70,8 +70,24 @@ import ContactForm from '../components/ContactForm.jsx';
 
           <!-- Note synchro -->
           <p class="font-body text-xs text-muted-foreground text-center mt-3">
-            📅 Ce calendrier est synchronisé avec Airbnb et Booking.com — les dates réservées apparaissent automatiquement.
+            🔄 Synchronisé avec Airbnb · Mis à jour automatiquement toutes les 3h
           </p>
+
+          <!--
+            POUR CONNECTER AIRBNB À CE CALENDRIER :
+            1. Ouvre Google Calendar → clique sur les 3 points à côté de "Réservations Gîte"
+            2. Paramètres → "Autres agendas" → "Abonnement via URL"
+            3. Colle : https://www.airbnb.fr/calendar/ical/7268032.ics?t=cab18de279ac4a39a295599ff51f4602
+            4. Les réservations Airbnb apparaîtront automatiquement dans ce calendrier
+
+            POUR CONNECTER BOOKING :
+            - Extranet Booking → Calendrier → Synchroniser → Exporter le lien iCal
+            - Colle ce lien dans Google Calendar (même étape 2-3 ci-dessus)
+
+            POUR ENVOYER CE CALENDRIER VERS AIRBNB :
+            - Dans Airbnb → Disponibilités → Associer des calendriers → Importer
+            - Colle : https://calendar.google.com/calendar/ical/25b3de2e74ffffd444d1f2ab180d0a594ec8d7d404dd153a331a7d493570c424%40group.calendar.google.com/public/basic.ics
+          -->
         </div>
       </div>
 
