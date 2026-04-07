@@ -26,7 +26,7 @@ export default function HeroSection() {
         <h1
           className="font-heading text-6xl md:text-8xl lg:text-9xl font-light text-white leading-tight opacity-0 animate-[fadeUp_1s_ease_0.5s_forwards]"
         >
-          Gîte de l'Ormoy
+          Le Gîte de l'Ormoy
         </h1>
 
         <p
