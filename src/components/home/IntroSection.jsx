@@ -22,10 +22,11 @@ export default function IntroSection() {
           {[
             { value: '6', label: 'Couchages' },
             { value: '3', label: 'Chambres' },
-            { value: '4★', label: 'Meublé tourisme' },
+           { value: '4 ★', label: 'Meublé tourisme' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
-              <p className="font-heading text-5xl font-light text-primary">{stat.value}</p>
+              <p className="font-heading text-5xl font-light text-primary leading-none">
+                {stat.value === '4★' ? <>4<span className="text-2xl">★</span></> : stat.value}</p>
               <p className="font-body text-sm text-muted-foreground mt-1">{stat.label}</p>
             </div>
           ))}
