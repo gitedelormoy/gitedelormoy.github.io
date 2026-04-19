@@ -266,7 +266,7 @@ export default function ContactForm() {
               onSelect={handleRangeSelect}
               disabled={disabledDays}
               locale={fr}
-              numberOfMonths={2}
+              numberOfMonths={1}
               fromDate={today}
               modifiersClassNames={{
                 disabled: 'rdp-day_disabled',
