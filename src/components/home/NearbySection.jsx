@@ -27,7 +27,7 @@ export default function NearbySection() {
           <div className="rounded-2xl overflow-hidden border border-border shadow-sm h-96">
             <iframe
               title="Localisation Gîte de l'Ormoy"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=1.7%2C47.0%2C2.5%2C47.4&layer=mapnik&marker=47.2012%2C2.1245"
+              src="src="https://www.openstreetmap.org/export/embed.html?bbox=1.87%2C47.08%2C2.27%2C47.28&layer=mapnik&marker=47.1689%2C2.0701"
               className="w-full h-full"
               loading="lazy"
             />
