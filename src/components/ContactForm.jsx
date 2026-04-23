@@ -255,10 +255,13 @@ export default function ContactForm() {
         {showCalendar && (
           <div className="mt-2 border border-border rounded-2xl p-4 bg-card shadow-sm overflow-x-auto">
             <style>{`
-              .rdp { --rdp-accent-color: hsl(150, 25%, 28%); --rdp-background-color: hsl(150, 25%, 28%, 0.1); margin: 0; }
-              .rdp-day_disabled { opacity: 0.3; text-decoration: line-through; }
-              .rdp-day_selected { background-color: hsl(150, 25%, 28%); color: white; }
-              .rdp-day_range_middle { background-color: hsl(150, 25%, 28%, 0.15); color: hsl(150, 25%, 28%); }
+            .rdp { --rdp-accent-color: hsl(150, 25%, 28%); --rdp-background-color: hsla(150, 25%, 28%, 0.1); margin: 0; }
+            .rdp-day_disabled { opacity: 0.3; text-decoration: line-through; }
+            .rdp-day_selected { background-color: hsl(150, 25%, 28%) !important; color: white !important; border-radius: 50%; }
+            .rdp-day_range_middle { background-color: hsla(150, 25%, 28%, 0.15) !important; color: hsl(150, 25%, 28%) !important; border-radius: 0 !important; }
+            .rdp-day_range_start { background-color: hsl(150, 25%, 28%) !important; color: white !important; border-radius: 50% 0 0 50% !important; }
+            .rdp-day_range_end { background-color: hsl(150, 25%, 28%) !important; color: white !important; border-radius: 0 50% 50% 0 !important; }
+            .rdp-day:hover:not(.rdp-day_disabled) { background-color: hsla(150, 25%, 28%, 0.2) !important; border-radius: 50%; }
             `}</style>
             <DayPicker
               mode="range"
