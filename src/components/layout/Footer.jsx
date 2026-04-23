@@ -89,7 +89,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-primary-foreground/20">
           <p className="font-body text-xs opacity-60 text-center">
-            © {new Date().getFullYear()} Le Gîte de l'Ormoyr. Tous droits réservés.
+            © {new Date().getFullYear()} Le Gîte de l'Ormoy. Tous droits réservés.
           </p>
         </div>
       </div>
