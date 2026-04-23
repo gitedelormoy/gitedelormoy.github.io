@@ -123,7 +123,6 @@ export default function ContactForm() {
       setRange({ from: undefined, to: undefined });
       return;
     }
-    // Vérifie qu'aucune date réservée n'est dans la plage
     if (selected.from && selected.to) {
       const between = getDatesBetween(selected.from, selected.to);
       const hasBooked = between.some(d =>
@@ -133,7 +132,6 @@ export default function ContactForm() {
         setRange({ from: selected.from, to: undefined });
         return;
       }
-      // Haute saison : minimum 6 nuits
       if (isHauteSaison(selected.from)) {
         const nuits = Math.round((selected.to - selected.from) / (1000 * 60 * 60 * 24));
         if (nuits < 6) {
@@ -255,13 +253,13 @@ export default function ContactForm() {
         {showCalendar && (
           <div className="mt-2 border border-border rounded-2xl p-4 bg-card shadow-sm overflow-x-auto">
             <style>{`
-            .rdp { --rdp-accent-color: hsl(150, 25%, 28%); --rdp-background-color: hsla(150, 25%, 28%, 0.1); margin: 0; }
-            .rdp-day_disabled { opacity: 0.3; text-decoration: line-through; }
-            .rdp-day_selected { background-color: hsl(150, 25%, 28%) !important; color: white !important; border-radius: 50%; }
-            .rdp-day_range_middle { background-color: hsla(150, 25%, 28%, 0.15) !important; color: hsl(150, 25%, 28%) !important; border-radius: 0 !important; }
-            .rdp-day_range_start { background-color: hsl(150, 25%, 28%) !important; color: white !important; border-radius: 50% 0 0 50% !important; }
-            .rdp-day_range_end { background-color: hsl(150, 25%, 28%) !important; color: white !important; border-radius: 0 50% 50% 0 !important; }
-            .rdp-day:hover:not(.rdp-day_disabled) { background-color: hsla(150, 25%, 28%, 0.2) !important; border-radius: 50%; }
+              .rdp { --rdp-accent-color: hsl(150, 25%, 28%); --rdp-background-color: hsla(150, 25%, 28%, 0.1); margin: 0; }
+              .rdp-day_disabled { opacity: 0.3; text-decoration: line-through; }
+              .rdp-day_selected { background-color: hsl(150, 25%, 28%) !important; color: white !important; border-radius: 50%; }
+              .rdp-day_range_middle { background-color: hsla(150, 25%, 28%, 0.15) !important; color: hsl(150, 25%, 28%) !important; border-radius: 0 !important; }
+              .rdp-day_range_start { background-color: hsl(150, 25%, 28%) !important; color: white !important; border-radius: 50% 0 0 50% !important; }
+              .rdp-day_range_end { background-color: hsl(150, 25%, 28%) !important; color: white !important; border-radius: 0 50% 50% 0 !important; }
+              .rdp-day:hover:not(.rdp-day_disabled) { background-color: hsla(150, 25%, 28%, 0.2) !important; border-radius: 50%; }
             `}</style>
             <DayPicker
               mode="range"
@@ -275,12 +273,28 @@ export default function ContactForm() {
                 disabled: 'rdp-day_disabled',
               }}
             />
-            {range.from && !range.to && (
-              <p className="font-body text-xs text-muted-foreground mt-2 text-center">
-                Cliquez sur la date de départ
-                {hauteSaisonInfo ? ` (minimum 6 nuits — au plus tôt le ${formatDate(new Date(range.from.getTime() + 6 * 86400000))})` : ''}
-              </p>
-            )}
+            <div className="flex items-center justify-between mt-3">
+              {range.from && !range.to && (
+                <p className="font-body text-xs text-muted-foreground">
+                  Cliquez sur la date de départ
+                  {hauteSaisonInfo ? ` (min. 6 nuits)` : ''}
+                </p>
+              )}
+              {!range.from && (
+                <p className="font-body text-xs text-muted-foreground">
+                  Cliquez sur votre date d'arrivée
+                </p>
+              )}
+              {range.from && (
+                <button
+                  type="button"
+                  onClick={() => setRange({ from: undefined, to: undefined })}
+                  className="ml-auto font-body text-xs text-red-400 hover:text-red-600 transition-colors"
+                >
+                  ✕ Effacer les dates
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>
