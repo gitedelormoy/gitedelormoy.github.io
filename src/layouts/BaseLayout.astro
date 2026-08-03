@@ -2,22 +2,18 @@
 import '../styles/global.css';
 import Navbar from '../components/layout/Navbar.jsx';
 import Footer from '../components/layout/Footer.jsx';
-
 export interface Props {
   title: string;
   description?: string;
   image?: string;
 }
-
 const {
   title,
   description = "Meublé de tourisme 4 étoiles au cœur de la Sologne & du Berry. Un havre de paix où le charme champêtre rencontre le confort moderne, près de Vierzon.",
   image = "/og-image.jpg"
 } = Astro.props;
-
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
-
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -63,7 +59,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       }
     </script>
 
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dpgmwola2/image/upload/v1785775632/gite-de-l-ormoy-logo-big-Icon_gp9vcy.png" />
+    <link rel="apple-touch-icon" href="https://res.cloudinary.com/dpgmwola2/image/upload/v1785775632/gite-de-l-ormoy-logo-big-Icon_gp9vcy.png" />
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SWKC99L4BC"></script>
