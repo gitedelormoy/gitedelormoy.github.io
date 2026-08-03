@@ -34,7 +34,7 @@ export default function Navbar() {
         {/* Logo */}
         <a href="/" className="flex items-center gap-3">
           <img
-            src="https://www.gitedelormoy.fr/wp-content/uploads/2015/07/gite-de-l-ormoy-logo.jpg"
+            src="https://res.cloudinary.com/dpgmwola2/image/upload/v1785775632/gite-de-l-ormoy-logo-big-Icon_gp9vcy.png"
             alt="Logo Gîte de l'Ormoy"
             className="h-9 w-auto rounded-full"
           />
