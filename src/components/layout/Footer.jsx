@@ -56,11 +56,11 @@ export default function Footer() {
                <span className="opacity-80">1 Route de Mehun, 18330 Saint Laurent<br /></span>
               </div>
               <a
-                href="mailto:contact@gitedelormoy.fr"
+                href="mailto:info@gitedelormoy.fr"
                 className="flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity"
               >
                 <Mail className="w-4 h-4 shrink-0" />
-                <span>contact@gitedelormoy.fr</span>
+                <span>info@gitedelormoy.fr</span>
               </a>
               <div className="pt-4 space-y-2">
                 <a
