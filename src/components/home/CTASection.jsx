@@ -26,7 +26,7 @@ export default function CTASection() {
             </p>
             <div className="flex items-center gap-6">
               
-                href="/reserver"
+                <a href="/reserver"
                 className="px-7 py-3 bg-white text-stone-900 font-body font-medium text-sm rounded-full hover:bg-white/90 transition-all duration-300 tracking-wide"
               >
                 Réserver
