@@ -12,31 +12,23 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Overlay — dégradé latéral gauche + bas */}
+      {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/30 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-      {/* Content — aligné bas gauche */}
+      {/* Content */}
       <div className="relative z-10 min-h-[100dvh] flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-20 md:pb-24">
         <div className="max-w-2xl">
-
-          {/* Saison label — minimaliste */}
           <p className="font-body text-white/50 text-[11px] tracking-[0.25em] uppercase mb-6">
             Sologne & Berry — 4 étoiles
           </p>
-
-          {/* Headline */}
           <h1 className="font-heading font-light text-white leading-[0.95] mb-8">
             <span className="block text-5xl md:text-7xl lg:text-8xl">Le Gîte</span>
             <span className="block text-5xl md:text-7xl lg:text-8xl italic text-white/90">de l'Ormoy</span>
           </h1>
-
-          {/* Subtext */}
           <p className="font-body text-white/65 text-sm md:text-base max-w-sm leading-relaxed mb-10">
             Un havre de paix au cœur de la France, où le charme champêtre rencontre le confort moderne.
           </p>
-
-          {/* CTAs */}
           <div className="flex items-center gap-6">
             
               href="/reserver"
@@ -54,10 +46,13 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Ligne décorative verticale */}
+      {/* Détail vertical */}
       <div className="absolute right-12 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-4">
         <div className="w-px h-16 bg-white/20" />
-        <p className="font-body text-white/30 text-[10px] tracking-[0.3em] uppercase" style={{ writingMode: 'vertical-rl' }}>
+        <p
+          className="font-body text-white/30 text-[10px] tracking-[0.3em] uppercase"
+          style={{ writingMode: 'vertical-rl' }}
+        >
           Saint-Laurent
         </p>
         <div className="w-px h-16 bg-white/20" />
