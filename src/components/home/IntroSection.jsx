@@ -13,7 +13,7 @@ export default function IntroSection() {
               <span className="italic text-primary">au cœur de la France</span>
             </h2>
             
-              href="/le-gite"
+              <a href="/le-gite"
               className="inline-flex items-center gap-3 font-body text-sm text-foreground/60 hover:text-primary transition-colors duration-300 tracking-wide group"
             >
               <span className="w-8 h-px bg-current transition-all duration-300 group-hover:w-12" />
