@@ -2,36 +2,48 @@ import React from 'react';
 
 export default function IntroSection() {
   return (
-    <section id="decouvrir" className="py-24 md:py-32 px-6">
-      <div className="max-w-4xl mx-auto text-center">
-        <p className="section-label mb-4">Bienvenue</p>
-        <h2 className="font-heading text-4xl md:text-6xl font-light text-foreground mb-8 leading-tight">
-          Un cocon de charme<br />au cœur de la France
-        </h2>
-        <p className="font-body text-muted-foreground leading-relaxed text-lg max-w-2xl mx-auto mb-6">
-          Découvrez la tranquillité à seulement cinquante mètres du village pittoresque
-          de Saint Laurent. Suivez une petite route de campagne et empruntez l'allée
-          majestueuse de marronniers menant au château.
-        </p>
-        <p className="font-body text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-          La Maison de Gardien du Château de L'Ormoy est un joyau préservé, témoignant de
-          l'histoire à travers les âges. Grâce à une restauration minutieuse, cette demeure est
-          désormais un havre où chacun peut savourer une qualité de vie exceptionnelle.
-        </p>
+    <section id="decouvrir" className="py-28 md:py-36 px-8 md:px-16 lg:px-24">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-end">
 
-        <div className="grid grid-cols-3 gap-8 mt-16 max-w-2xl mx-auto">
-          <div className="text-center">
-            <p className="font-heading text-5xl font-light text-primary">6</p>
-            <p className="font-body text-sm text-muted-foreground mt-1">Couchages</p>
+          {/* Texte gauche */}
+          <div>
+            <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl font-light text-foreground leading-[1.05] mb-10">
+              Un cocon de charme<br />
+              <span className="italic text-primary">au cœur de la France</span>
+            </h2>
+            
+              href="/le-gite"
+              className="inline-flex items-center gap-3 font-body text-sm text-foreground/60 hover:text-primary transition-colors duration-300 tracking-wide group"
+            >
+              <span className="w-8 h-px bg-current transition-all duration-300 group-hover:w-12" />
+              Découvrir le gîte
+            </a>
           </div>
-          <div className="text-center">
-            <p className="font-heading text-5xl font-light text-primary">3</p>
-            <p className="font-body text-sm text-muted-foreground mt-1">Chambres</p>
+
+          {/* Texte droit */}
+          <div className="space-y-5">
+            <p className="font-body text-foreground/70 leading-relaxed text-base">
+              À cinquante mètres du village de Saint Laurent, une petite route de campagne mène à l'allée majestueuse de marronniers du château de l'Ormoy.
+            </p>
+            <p className="font-body text-foreground/60 leading-relaxed text-sm">
+              La Maison de Gardien, minutieusement restaurée, est un joyau préservé où chacun peut savourer une qualité de vie exceptionnelle — entre histoire et confort contemporain.
+            </p>
           </div>
-          <div className="text-center">
-            <p className="font-heading text-5xl font-light text-primary">4<span style={{fontSize: '1.5rem', verticalAlign: 'middle', marginLeft: '2px'}}>★</span></p>
-            <p className="font-body text-sm text-muted-foreground mt-1">Meublé tourisme</p>
-          </div>
+        </div>
+
+        {/* Stats — ligne fine */}
+        <div className="mt-20 pt-10 border-t border-border grid grid-cols-3 gap-0">
+          {[
+            { value: '6', label: 'Couchages' },
+            { value: '3', label: 'Chambres' },
+            { value: '4★', label: 'Meublé de tourisme' },
+          ].map((stat, i) => (
+            <div key={i} className={`py-6 ${i > 0 ? 'border-l border-border pl-8 md:pl-12' : ''}`}>
+              <p className="font-heading text-4xl md:text-5xl font-light text-foreground">{stat.value}</p>
+              <p className="font-body text-xs text-muted-foreground mt-2 tracking-wide uppercase">{stat.label}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
