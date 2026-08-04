@@ -11,12 +11,10 @@ export default function CTASection() {
       />
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
-
           <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl font-light text-white leading-[1.05]">
             Prêt pour<br />
             <span className="italic text-white/70">votre escapade ?</span>
           </h2>
-
           <div className="space-y-8">
             <p className="font-body text-white/50 leading-relaxed text-sm max-w-sm">
               Contactez-nous pour vérifier les disponibilités et organiser votre séjour sur mesure au cœur de la Sologne.
@@ -27,8 +25,6 @@ export default function CTASection() {
               </a>
               <a href="mailto:info@gitedelormoy.fr" className="font-body text-white/40 text-sm hover:text-white transition-colors duration-300 tracking-wide underline underline-offset-4 decoration-white/20 hover:decoration-white/50">
                 Nous écrire
-              </a>
-            </div>
               </a>
             </div>
           </div>
