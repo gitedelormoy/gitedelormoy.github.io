@@ -41,7 +41,7 @@ export default function Navbar() {
           <span className={`font-heading text-base font-light tracking-widest transition-colors duration-500 ${
             scrolled ? 'text-foreground' : 'text-white'
           }`}>
-            L'Ormoy
+            Le Gîte de l'Ormoy
           </span>
         </a>
 
