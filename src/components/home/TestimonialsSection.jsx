@@ -28,7 +28,7 @@ export default function TestimonialsSection() {
             Ce qu'ils<br /><span className="italic">en disent</span>
           </h2>
           
-            href="https://www.airbnb.fr"
+            <a href="https://www.airbnb.fr"
             target="_blank"
             rel="noopener noreferrer"
             className="font-body text-xs text-muted-foreground hover:text-primary transition-colors tracking-widest uppercase"
