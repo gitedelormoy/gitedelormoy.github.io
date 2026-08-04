@@ -32,7 +32,7 @@ export default function CTASection() {
                 Réserver
               </a>
               
-                href="mailto:info@gitedelormoy.fr"
+                <a href="mailto:info@gitedelormoy.fr"
                 className="font-body text-white/40 text-sm hover:text-white transition-colors duration-300 tracking-wide underline underline-offset-4 decoration-white/20 hover:decoration-white/50"
               >
                 Nous écrire
