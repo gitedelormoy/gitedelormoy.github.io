@@ -3,7 +3,6 @@ import React from 'react';
 export default function HeroSection() {
   return (
     <section className="relative min-h-[100dvh] overflow-hidden">
-      {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center scale-[1.02]"
         style={{
@@ -11,12 +10,8 @@ export default function HeroSection() {
             "url(https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496829/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--4-min_ks62ta.jpg)",
         }}
       />
-
-      {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/30 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
-      {/* Content */}
       <div className="relative z-10 min-h-[100dvh] flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-20 md:pb-24">
         <div className="max-w-2xl">
           <p className="font-body text-white/50 text-[11px] tracking-[0.25em] uppercase mb-6">
@@ -45,8 +40,6 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-
-      {/* Détail vertical */}
       <div className="absolute right-12 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-4">
         <div className="w-px h-16 bg-white/20" />
         <p
