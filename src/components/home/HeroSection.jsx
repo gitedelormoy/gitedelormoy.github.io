@@ -15,7 +15,7 @@ export default function HeroSection() {
       <div className="relative z-10 min-h-[100dvh] flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-20 md:pb-24">
         <div className="max-w-2xl">
           <p className="font-body text-white/50 text-[11px] tracking-[0.25em] uppercase mb-6">
-            Sologne & Berry — 4 étoiles
+            Sologne {'&'} Berry — 4 étoiles
           </p>
           <h1 className="font-heading font-light text-white leading-[0.95] mb-8">
             <span className="block text-5xl md:text-7xl lg:text-8xl">Le Gîte</span>
