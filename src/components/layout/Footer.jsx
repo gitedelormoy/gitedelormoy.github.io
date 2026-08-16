@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, Mail, ExternalLink } from 'lucide-react';
+
 const navLinks = [
   { label: 'Accueil', path: '/' },
   { label: 'Le Gîte', path: '/le-gite' },
@@ -9,11 +10,13 @@ const navLinks = [
   { label: 'Blog', path: '/blog' },
   { label: 'Réserver', path: '/reserver' },
 ];
+
 export default function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+
           {/* Brand + Plaque */}
           <div>
             <h3 className="font-heading text-3xl font-semibold mb-4">Le Gîte de l'Ormoy</h3>
@@ -27,6 +30,7 @@ export default function Footer() {
               className="h-28 w-auto object-contain mt-6"
             />
           </div>
+
           {/* Navigation */}
           <div>
             <h4 className="font-heading text-xl font-semibold mb-4">Navigation</h4>
@@ -42,6 +46,7 @@ export default function Footer() {
               ))}
             </div>
           </div>
+
           {/* Contact */}
           <div>
             <h4 className="font-heading text-xl font-semibold mb-4">Contact</h4>
@@ -50,8 +55,10 @@ export default function Footer() {
                 <MapPin className="w-4 h-4 mt-0.5 opacity-80 shrink-0" />
                 <span className="opacity-80">1 Route de Mehun, 18330 Saint Laurent</span>
               </div>
+              
                 href="mailto:info@gitedelormoy.fr"
                 className="flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity"
+              >
                 <Mail className="w-4 h-4 shrink-0" />
                 <span>info@gitedelormoy.fr</span>
               </a>
@@ -61,6 +68,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 opacity-80 hover:opacity-100 transition-opacity text-xs"
+                >
                   <ExternalLink className="w-3 h-3" />
                   Office de Tourisme de Vierzon
                 </a>
