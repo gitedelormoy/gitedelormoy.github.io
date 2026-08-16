@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page introuvable — Gîte de l'Ormoy"
+  description="La page que vous recherchez n'existe pas. Retournez à l'accueil du Gîte de l'Ormoy."
+>
+  <section class="relative min-h-[100dvh] overflow-hidden">
+    <!-- Background -->
+    <div
+      class="absolute inset-0 bg-cover bg-center"
+      style="background-image: url(https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496829/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--4-min_ks62ta.jpg)"
+    >
+      <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
+    </div>
+
+    <!-- Content -->
+    <div class="relative z-10 min-h-[100dvh] flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-20 md:pb-24">
+      <div class="max-w-2xl">
+        <p class="font-body text-white/40 text-[11px] tracking-[0.25em] uppercase mb-6">
+          Erreur 404
+        </p>
+        <h1 class="font-heading font-light text-white leading-[0.95] mb-8">
+          <span class="block text-5xl md:text-7xl lg:text-8xl">Page</span>
+          <span class="block text-5xl md:text-7xl lg:text-8xl italic text-white/70">introuvable</span>
+        </h1>
+        <p class="font-body text-white/60 text-sm md:text-base max-w-sm leading-relaxed mb-10">
+          La page que vous recherchez n'existe pas ou a été déplacée. Revenez à l'accueil pour explorer le gîte.
+        </p>
+        <div class="flex items-center gap-6">
+          <a
+            href="/"
+            class="px-7 py-3 bg-white text-stone-900 font-body font-medium text-sm rounded-full hover:bg-white/90 transition-all duration-300 tracking-wide"
+          >
+            Retour à l'accueil
+          </a>
+          <a
+            href="/reserver"
+            class="font-body text-white/70 text-sm hover:text-white transition-colors duration-300 tracking-wide underline underline-offset-4 decoration-white/30 hover:decoration-white/60"
+          >
+            Réserver un séjour
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
