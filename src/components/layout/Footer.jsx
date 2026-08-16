@@ -64,7 +64,7 @@ export default function Footer() {
               </a>
               <div className="pt-4 space-y-2">
                 <a
-                  href="http://www.officedetourismepaysdevierzon.fr"
+                  href="https://www.berrysolognetourisme.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 opacity-80 hover:opacity-100 transition-opacity text-xs"
@@ -72,14 +72,6 @@ export default function Footer() {
                   <ExternalLink className="w-3 h-3" />
                   Office de Tourisme de Vierzon
                 </a>
-                <a
-                  href="http://www.villagesdelaforet.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 opacity-80 hover:opacity-100 transition-opacity text-xs"
-                >
-                  <ExternalLink className="w-3 h-3" />
-                  Villages de la Forêt
                 </a>
               </div>
             </div>
