@@ -22,7 +22,7 @@ export default function HeroSection() {
             <span className="block text-5xl md:text-7xl lg:text-8xl italic text-white/90">de l'Ormoy</span>
           </h1>
           <p className="font-body text-white/65 text-sm md:text-base max-w-sm leading-relaxed mb-10">
-            Un havre de paix au coeur de la France, où le charme champetre rencontre le confort moderne.
+            Un havre de paix au coeur de la France, où le charme champêtre rencontre le confort moderne.
           </p>
           <div className="flex items-center gap-6">
             <a href="/reserver" className="px-7 py-3 bg-white text-stone-900 font-body font-medium text-sm rounded-full hover:bg-white/90 transition-all duration-300 tracking-wide">
