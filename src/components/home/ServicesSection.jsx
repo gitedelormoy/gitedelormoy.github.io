@@ -10,7 +10,6 @@ const services = [
   { icon: Flame, label: 'Plancha' },
   { icon: AirVent, label: 'Climatisation' },
   { icon: Baby, label: 'Equipement bebe' },
-  { icon: Zap, label: 'Borne de recharge electrique' },
   { icon: BookOpen, label: 'Guides locaux' },
 ];
 export default function ServicesSection() {
