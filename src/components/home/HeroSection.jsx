@@ -1,6 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+function isClimatisationSeason() {
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+  if (month > 5 && month < 10) return true;
+  if (month === 5 && day >= 1) return true;
+  if (month === 9 && day <= 30) return true;
+  return false;
+}
 
 export default function HeroSection() {
+  const [showClim, setShowClim] = useState(false);
+
+  useEffect(() => {
+    setShowClim(isClimatisationSeason());
+  }, []);
+
   return (
     <section className="relative min-h-[100dvh] overflow-hidden">
       <div
@@ -12,6 +28,7 @@ export default function HeroSection() {
       />
       <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/30 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
       <div className="relative z-10 min-h-[100dvh] flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-20 md:pb-24">
         <div className="max-w-2xl">
           <p className="font-body text-white/50 text-[11px] tracking-[0.25em] uppercase mb-6">
@@ -21,9 +38,20 @@ export default function HeroSection() {
             <span className="block text-5xl md:text-7xl lg:text-8xl">Le Gîte</span>
             <span className="block text-5xl md:text-7xl lg:text-8xl italic text-white/90">de l'Ormoy</span>
           </h1>
-          <p className="font-body text-white/65 text-sm md:text-base max-w-sm leading-relaxed mb-10">
+          <p className="font-body text-white/65 text-sm md:text-base max-w-sm leading-relaxed mb-8">
             Un havre de paix au coeur de la France, où le charme champêtre rencontre le confort moderne.
           </p>
+
+          {/* Badge climatisation — visible du 1er mai au 30 septembre */}
+          {showClim && (
+            <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm">
+              <span className="text-sm">❄️</span>
+              <span className="font-body text-white/90 text-xs tracking-[0.15em] uppercase">
+                Gîte entièrement climatisé
+              </span>
+            </div>
+          )}
+
           <div className="flex items-center gap-6">
             <a href="/reserver" className="px-7 py-3 bg-white text-stone-900 font-body font-medium text-sm rounded-full hover:bg-white/90 transition-all duration-300 tracking-wide">
               Réserver
@@ -34,6 +62,7 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
+
       <div className="absolute right-12 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-4">
         <div className="w-px h-16 bg-white/20" />
         <p className="font-body text-white/30 text-[10px] tracking-[0.3em] uppercase" style={{ writingMode: 'vertical-rl' }}>
