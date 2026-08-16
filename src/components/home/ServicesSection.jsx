@@ -2,7 +2,7 @@ import React from 'react';
 import { Wifi, Tv, UtensilsCrossed, Shirt, Heart, Car, Flame, AirVent, Baby, Zap, BookOpen } from 'lucide-react';
 const services = [
   { icon: Wifi, label: 'WiFi Fibre haut debit' },
-  { icon: Tv, label: 'Televisions' },
+  { icon: Tv, label: 'Télévision' },
   { icon: UtensilsCrossed, label: 'Cuisine equipee' },
   { icon: Shirt, label: 'Lave linge' },
   { icon: Heart, label: 'Accueil equestre' },
