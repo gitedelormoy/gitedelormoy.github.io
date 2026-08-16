@@ -7,7 +7,7 @@ const services = [
   { icon: Shirt, label: 'Lave linge' },
   { icon: Heart, label: 'Accueil equestre' },
   { icon: Car, label: 'Parking gratuit' },
-  { icon: Flame, label: 'Barbecue' },
+  { icon: Flame, label: 'Plancha' },
   { icon: AirVent, label: 'Climatisation' },
   { icon: Baby, label: 'Equipement bebe' },
   { icon: Zap, label: 'Borne de recharge electrique' },
