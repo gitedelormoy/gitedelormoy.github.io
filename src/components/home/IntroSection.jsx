@@ -24,7 +24,7 @@ export default function IntroSection() {
           {/* Texte droit */}
           <div className="space-y-5">
             <p className="font-body text-foreground/70 leading-relaxed text-base">
-              À cinquante mètres du village de Saint Laurent, une petite route de campagne mène à l'allée majestueuse de marronniers du château de l'Ormoy.
+              À cinquante mètres du village de Saint Laurent, une petite route de campagne mène à la majestueuse allée de marronniers du château de l'Ormoy.
             </p>
             <p className="font-body text-foreground/60 leading-relaxed text-sm">
               La Maison de Gardien, minutieusement restaurée, est un joyau préservé où chacun peut savourer une qualité de vie exceptionnelle — entre histoire et confort contemporain.
