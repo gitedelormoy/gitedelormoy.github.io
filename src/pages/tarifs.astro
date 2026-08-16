@@ -1,5 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const courts = [
+  { label: "Week-end", sublabel: "2 nuits", basse: 390, moyenne: 430, haute: 470 },
+  { label: "3 nuits", sublabel: "", basse: 480, moyenne: 530, haute: 580 },
+  { label: "4 nuits", sublabel: "", basse: 560, moyenne: 620, haute: 680 },
+  { label: "5 nuits", sublabel: "", basse: 630, moyenne: 700, haute: 770 },
+  { label: "6 nuits", sublabel: "", basse: 690, moyenne: 770, haute: 850 },
+];
 ---
 
 <BaseLayout
@@ -7,170 +15,162 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   description="Tarifs du Gîte de l'Ormoy selon les saisons et la durée du séjour. Week-end, semaine, vacances scolaires. Draps et ménage inclus."
 >
   <!-- Hero -->
-  <section class="relative h-[55vh] overflow-hidden">
+  <section class="relative h-[45vh] min-h-[320px] overflow-hidden">
     <div
       class="absolute inset-0 bg-cover bg-center"
       style="background-image: url(https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496821/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--14-min_axmqnm.jpg)"
     >
-      <div class="hero-overlay"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
     </div>
-    <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
-      <div>
-        <p class="section-label text-white/70 mb-3">Réservation</p>
-        <h1 class="font-heading text-6xl md:text-8xl font-light text-white">Nos Tarifs</h1>
-      </div>
+    <div class="relative z-10 h-full flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-12">
+      <h1 class="font-heading text-5xl md:text-7xl font-light text-white leading-[0.95]">
+        Nos tarifs<br />
+        <span class="italic text-white/70">au fil des saisons</span>
+      </h1>
     </div>
   </section>
 
   <!-- Intro -->
-  <section class="py-16 px-6 text-center">
-    <div class="max-w-2xl mx-auto">
-      <p class="font-body text-muted-foreground leading-relaxed">
-        Tous les tarifs sont indiqués pour le gîte entier (6 personnes maximum).<br />
-        <strong class="text-foreground font-medium">Draps, linge de toilette et ménage final inclus.</strong><br />
+  <section class="py-16 px-8 md:px-16 lg:px-24 border-b border-border">
+    <div class="max-w-6xl mx-auto flex items-end justify-between flex-wrap gap-6">
+      <p class="font-heading text-2xl md:text-3xl font-light text-foreground italic max-w-lg">
+        Tarifs pour le gîte entier, 6 personnes maximum.
+      </p>
+      <p class="font-body text-sm text-foreground/50 max-w-xs leading-relaxed">
+        Draps, linge de toilette et ménage final inclus.<br />
         Taxe de séjour : 0,22€ par nuit et par adulte.
       </p>
     </div>
   </section>
 
-  <!-- Saisons legend -->
-  <section class="pb-6 px-6">
-    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
-      <!-- Basse saison -->
-      <div class="rounded-2xl border-2 border-primary/20 bg-card p-6">
-        <div class="flex items-center gap-3 mb-2">
-          <span class="text-2xl">🍂</span>
-          <h3 class="font-heading text-xl font-medium text-foreground">Basse saison</h3>
+  <!-- Saisons + Semaine -->
+  <section class="py-20 px-8 md:px-16 lg:px-24">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="font-heading text-3xl md:text-4xl font-light text-foreground mb-12">
+        Séjour à la semaine
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
+        <!-- Basse -->
+        <div class="bg-background p-10">
+          <p class="font-body text-xs text-muted-foreground uppercase tracking-widest mb-6">Basse saison</p>
+          <p class="font-heading text-6xl font-light text-foreground mb-2">740€</p>
+          <p class="font-body text-xs text-foreground/50">la semaine</p>
+          <div class="mt-8 pt-6 border-t border-border">
+            <p class="font-body text-xs text-foreground/50 leading-relaxed">Restant de l'année</p>
+          </div>
         </div>
-        <p class="font-body text-sm text-muted-foreground">Restant de l'année</p>
-      </div>
-      <!-- Moyenne saison -->
-      <div class="rounded-2xl border-2 border-primary/40 bg-card p-6">
-        <div class="flex items-center gap-3 mb-2">
-          <span class="text-2xl">🌸</span>
-          <h3 class="font-heading text-xl font-medium text-foreground">Moyenne saison</h3>
+        <!-- Moyenne -->
+        <div class="bg-background p-10">
+          <p class="font-body text-xs text-muted-foreground uppercase tracking-widest mb-6">Moyenne saison</p>
+          <p class="font-heading text-6xl font-light text-foreground mb-2">840€</p>
+          <p class="font-body text-xs text-foreground/50">la semaine</p>
+          <div class="mt-8 pt-6 border-t border-border">
+            <p class="font-body text-xs text-foreground/50 leading-relaxed">Vacances scolaires Zone B</p>
+          </div>
         </div>
-        <p class="font-body text-sm text-muted-foreground">Vacances scolaires</p>
-      </div>
-      <!-- Haute saison -->
-      <div class="rounded-2xl border-2 border-primary bg-primary text-primary-foreground p-6">
-        <div class="flex items-center gap-3 mb-2">
-          <span class="text-2xl">☀️</span>
-          <h3 class="font-heading text-xl font-medium">Haute saison</h3>
+        <!-- Haute -->
+        <div class="bg-foreground p-10">
+          <p class="font-body text-xs text-white/40 uppercase tracking-widest mb-6">Haute saison</p>
+          <p class="font-heading text-6xl font-light text-white mb-2">930€</p>
+          <p class="font-body text-xs text-white/40">la semaine</p>
+          <div class="mt-8 pt-6 border-t border-white/10">
+            <p class="font-body text-xs text-white/40 leading-relaxed">Juillet, août, Noël<br />6 nuits minimum</p>
+          </div>
         </div>
-        <p class="font-body text-sm opacity-75">Vacances d'été & Noël<br /></p>
       </div>
     </div>
   </section>
 
-  <!-- Tarifs semaine -->
-  <section class="py-10 px-6">
-    <div class="max-w-5xl mx-auto">
-      <h2 class="font-heading text-3xl font-light text-foreground mb-8 text-center">Séjour à la semaine</h2>
+  <!-- Courts séjours -->
+  <section class="py-20 px-8 md:px-16 lg:px-24 bg-muted/20">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="font-heading text-3xl md:text-4xl font-light text-foreground mb-12">
+        Courts séjours
+      </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-        <!-- Basse -->
-        <div class="rounded-2xl border border-border bg-card p-8 text-center">
-          <p class="section-label mb-3">Basse saison</p>
-          <p class="font-heading text-5xl font-light text-primary">740€</p>
-          <p class="font-body text-xs text-muted-foreground mt-1">la semaine</p>
-        </div>
-        <!-- Moyenne -->
-        <div class="rounded-2xl border border-border bg-card p-8 text-center">
-          <p class="section-label mb-3">Moyenne saison</p>
-          <p class="font-heading text-5xl font-light text-primary">840€</p>
-          <p class="font-body text-xs text-muted-foreground mt-1">la semaine</p>
-        </div>
-        <!-- Haute -->
-        <div class="rounded-2xl border border-primary bg-primary text-primary-foreground p-8 text-center shadow-xl">
-          <p class="font-body text-xs tracking-[0.2em] uppercase opacity-70 mb-3">Haute saison</p>
-          <p class="font-heading text-5xl font-light">930€</p>
-          <p class="font-body text-xs opacity-70 mt-1">la semaine</p>
-        </div>
-      </div>
-
-  <!-- Divider -->
-  <div class="max-w-5xl mx-auto px-6">
-    <div class="border-t border-border"></div>
-  </div>
-
-  <!-- Tableau courts séjours -->
-  <section class="py-10 px-6">
-    <div class="max-w-5xl mx-auto">
-      <h2 class="font-heading text-3xl font-light text-foreground mb-2 text-center">Courts séjours</h2>
-      <p class="font-body text-sm text-muted-foreground text-center mb-8">Tarifs pour le gîte entier — 6 personnes maximum</p>
-
-      <!-- Table header -->
-      <div class="grid grid-cols-4 gap-3 mb-3 px-2">
+      <!-- Header -->
+      <div class="grid grid-cols-4 gap-4 mb-2 px-4">
         <div></div>
-        <div class="text-center font-body text-xs font-medium text-muted-foreground tracking-widest uppercase">Basse</div>
-        <div class="text-center font-body text-xs font-medium text-muted-foreground tracking-widest uppercase">Moyenne</div>
-        <div class="text-center font-body text-xs font-medium text-muted-foreground tracking-widest uppercase">Haute</div>
+        <p class="font-body text-xs text-muted-foreground uppercase tracking-widest text-center">Basse</p>
+        <p class="font-body text-xs text-muted-foreground uppercase tracking-widest text-center">Moyenne</p>
+        <p class="font-body text-xs text-muted-foreground uppercase tracking-widest text-center">Haute</p>
       </div>
 
       <!-- Rows -->
-      {[
-        { label: "Week-end", sublabel: "Vend. + Sam. + Dim. (3j / 2 nuits)", basse: 390, moyenne: 430, haute: 470 },
-        { label: "3 nuitées", sublabel: "", basse: 480, moyenne: 530, haute: 580 },
-        { label: "4 nuitées", sublabel: "", basse: 560, moyenne: 620, haute: 680 },
-        { label: "5 nuitées", sublabel: "", basse: 630, moyenne: 700, haute: 770 },
-        { label: "6 nuitées", sublabel: "", basse: 690, moyenne: 770, haute: 850 },
-      ].map((row, i) => (
-        <div class={`grid grid-cols-4 gap-3 mb-3 items-center rounded-2xl p-4 ${i % 2 === 0 ? 'bg-card border border-border' : 'bg-muted/30'}`}>
-          <!-- Label -->
-          <div>
-            <p class="font-heading text-lg font-medium text-foreground">{row.label}</p>
-            {row.sublabel && <p class="font-body text-xs text-muted-foreground mt-0.5 leading-relaxed">{row.sublabel}</p>}
+      <div class="divide-y divide-border border-t border-b border-border">
+        {courts.map((row) => (
+          <div class="grid grid-cols-4 gap-4 items-center py-5 px-4">
+            <div>
+              <p class="font-body text-sm font-medium text-foreground">{row.label}</p>
+              {row.sublabel && <p class="font-body text-xs text-muted-foreground mt-0.5">{row.sublabel}</p>}
+            </div>
+            <p class="font-heading text-2xl font-light text-foreground text-center">{row.basse}€</p>
+            <p class="font-heading text-2xl font-light text-foreground text-center">{row.moyenne}€</p>
+            <p class="font-heading text-2xl font-light text-foreground text-center">{row.haute}€</p>
           </div>
-          <!-- Basse -->
-          <div class="text-center">
-            <p class="font-heading text-3xl font-light text-primary">{row.basse}€</p>
-          </div>
-          <!-- Moyenne -->
-          <div class="text-center">
-            <p class="font-heading text-3xl font-light text-primary">{row.moyenne}€</p>
-          </div>
-          <!-- Haute -->
-          <div class="text-center bg-primary rounded-xl py-3">
-            <p class="font-heading text-3xl font-light text-primary-foreground">{row.haute}€</p>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
-      <!-- Note taxe -->
-      <p class="font-body text-xs text-muted-foreground text-center mt-4">
-        * Taxe de séjour : 0,22€ par nuit et par adulte, non incluse dans les tarifs.
+      <p class="font-body text-xs text-muted-foreground mt-6">
+        * Taxe de séjour non incluse : 0,22€ par nuit et par adulte.
       </p>
+    </div>
+  </section>
 
-      <!-- Sur mesure -->
-      <div class="mt-10 rounded-2xl bg-muted/40 border border-border p-8 text-center">
-        <p class="font-heading text-2xl font-light text-foreground mb-2">
-          Séjour de plus de 6 nuitées ?
-        </p>
-        <p class="font-body text-sm text-muted-foreground mb-6 max-w-md mx-auto">
+  <!-- Sur mesure -->
+  <section class="py-20 px-8 md:px-16 lg:px-24 border-t border-border">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
+      <div>
+        <h2 class="font-heading text-3xl md:text-4xl font-light text-foreground mb-4">
+          Plus de 6 nuits ?
+        </h2>
+        <p class="font-body text-foreground/50 text-sm leading-relaxed max-w-sm">
           Pour les séjours supérieurs à une semaine, nous vous proposons un tarif sur mesure adapté à vos dates.
         </p>
+      </div>
+      <div class="flex items-center gap-6">
         <a
           href="/reserver"
-          class="inline-block px-10 py-4 bg-primary text-primary-foreground rounded-full font-body font-medium text-sm hover:bg-primary/90 transition-all duration-300 shadow-md"
+          class="px-7 py-3 bg-primary text-primary-foreground font-body font-medium text-sm rounded-full hover:bg-primary/90 transition-all duration-300 tracking-wide"
         >
-          Nous contacter pour un tarif sur mesure
+          Nous contacter
+        </a>
+        <a
+          href="mailto:info@gitedelormoy.fr"
+          class="font-body text-foreground/40 text-sm hover:text-foreground transition-colors duration-300 tracking-wide underline underline-offset-4"
+        >
+          info@gitedelormoy.fr
         </a>
       </div>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="py-16 px-6 bg-primary text-primary-foreground text-center mt-10">
-    <h2 class="font-heading text-3xl md:text-4xl font-light mb-4">Envie de réserver ?</h2>
-    <p class="font-body text-primary-foreground/75 mb-8 text-sm max-w-md mx-auto">
-      Contactez-nous pour vérifier les disponibilités et confirmer votre séjour.
-    </p>
-    <a
-      href="/reserver"
-      class="inline-block px-8 py-3.5 bg-primary-foreground text-primary rounded-full font-body font-medium text-sm hover:bg-primary-foreground/90 transition-all duration-300"
-    >
-      Demander une réservation
-    </a>
+  <section class="py-32 px-8 md:px-16 lg:px-24 bg-foreground">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
+      <h2 class="font-heading text-5xl md:text-6xl font-light text-white leading-[1.05]">
+        Envie de<br />
+        <span class="italic text-white/70">réserver ?</span>
+      </h2>
+      <div class="space-y-8">
+        <p class="font-body text-white/50 text-sm leading-relaxed max-w-sm">
+          Contactez-nous pour vérifier les disponibilités et confirmer votre séjour.
+        </p>
+        <div class="flex items-center gap-6">
+          <a
+            href="/reserver"
+            class="px-7 py-3 bg-white text-stone-900 font-body font-medium text-sm rounded-full hover:bg-white/90 transition-all duration-300 tracking-wide"
+          >
+            Réserver
+          </a>
+          <a
+            href="mailto:info@gitedelormoy.fr"
+            class="font-body text-white/40 text-sm hover:text-white transition-colors duration-300 tracking-wide underline underline-offset-4 decoration-white/20 hover:decoration-white/50"
+          >
+            Nous écrire
+          </a>
+        </div>
+      </div>
+    </div>
   </section>
 </BaseLayout>
