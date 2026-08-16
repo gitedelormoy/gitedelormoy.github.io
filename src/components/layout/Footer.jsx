@@ -36,8 +36,7 @@ export default function Footer() {
             <h4 className="font-heading text-xl font-semibold mb-4">Navigation</h4>
             <div className="space-y-2 font-body text-sm">
               {navLinks.map((link) => (
-                
-                  key={link.path}
+                <a key={link.path}
                   href={link.path}
                   className="block opacity-80 hover:opacity-100 transition-opacity"
                 >
@@ -55,16 +54,14 @@ export default function Footer() {
                 <MapPin className="w-4 h-4 mt-0.5 opacity-80 shrink-0" />
                 <span className="opacity-80">1 Route de Mehun, 18330 Saint Laurent</span>
               </div>
-              
-                href="mailto:info@gitedelormoy.fr"
+              <a href="mailto:info@gitedelormoy.fr"
                 className="flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity"
               >
                 <Mail className="w-4 h-4 shrink-0" />
                 <span>info@gitedelormoy.fr</span>
               </a>
               <div className="pt-4 space-y-2">
-                
-                  href="https://www.berrysolognetourisme.com/"
+                <a href="https://www.berrysolognetourisme.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 opacity-80 hover:opacity-100 transition-opacity text-xs"
