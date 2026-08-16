@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Mail, ExternalLink } from 'lucide-react';
+import { MapPin, Mail, Phone, ExternalLink } from 'lucide-react';
 
 const navLinks = [
   { label: 'Accueil', path: '/' },
@@ -16,12 +16,11 @@ export default function Footer() {
     <footer className="bg-primary text-primary-foreground">
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-
           {/* Brand + Plaque */}
           <div>
             <h3 className="font-heading text-3xl font-semibold mb-4">Le Gîte de l'Ormoy</h3>
             <p className="font-body text-sm leading-relaxed opacity-80">
-              Meublé de tourisme 4 étoiles au cœur de la Sologne &amp; du Berry.
+              Meublé de tourisme 4 étoiles au coeur de la Sologne et du Berry.
               Un havre de paix où le charme champêtre rencontre le confort moderne.
             </p>
             <img
@@ -54,6 +53,12 @@ export default function Footer() {
                 <MapPin className="w-4 h-4 mt-0.5 opacity-80 shrink-0" />
                 <span className="opacity-80">1 Route de Mehun, 18330 Saint Laurent</span>
               </div>
+              <a href="tel:+33675512979"
+                className="flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity"
+              >
+                <Phone className="w-4 h-4 shrink-0" />
+                <span>+33 6 75 51 29 79</span>
+              </a>
               <a href="mailto:info@gitedelormoy.fr"
                 className="flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity"
               >
@@ -75,10 +80,16 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-primary-foreground/20">
-          <p className="font-body text-xs opacity-60 text-center">
+        <div className="mt-12 pt-8 border-t border-primary-foreground/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="font-body text-xs opacity-60">
             © {new Date().getFullYear()} Le Gîte de l'Ormoy. Tous droits réservés.
           </p>
+          <a
+            href="/confidentialite"
+            className="font-body text-xs opacity-60 hover:opacity-100 transition-opacity underline underline-offset-4"
+          >
+            Politique de confidentialité
+          </a>
         </div>
       </div>
     </footer>
