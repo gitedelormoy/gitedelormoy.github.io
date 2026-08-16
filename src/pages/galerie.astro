@@ -8,42 +8,62 @@ import GalerieGrid from '../components/GalerieGrid.jsx';
   description="Découvrez en images le Gîte de l'Ormoy : chambres, véranda, jardin et espaces extérieurs de ce meublé de tourisme 4 étoiles en Sologne."
 >
   <!-- Hero -->
-  <section class="relative h-[55vh] overflow-hidden">
+  <section class="relative h-[55vh] min-h-[360px] overflow-hidden">
     <div
       class="absolute inset-0 bg-cover bg-center"
       style="background-image: url(https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496846/Extrtiot_gjxge4.png)"
     >
-      <div class="hero-overlay"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
     </div>
-    <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
-      <div>
-        <p class="section-label text-white/70 mb-3">Photos</p>
-        <h1 class="font-heading text-6xl md:text-8xl font-light text-white">Galerie</h1>
-        <p class="font-body text-white/60 text-sm mt-4 tracking-widest uppercase">17 photos</p>
-      </div>
+    <div class="relative z-10 h-full flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-12">
+      <h1 class="font-heading text-5xl md:text-7xl font-light text-white leading-[0.95]">
+        Galerie<br />
+        <span class="italic text-white/70">de l'Ormoy</span>
+      </h1>
     </div>
   </section>
 
   <!-- Intro -->
-  <section class="py-14 px-6 text-center max-w-2xl mx-auto">
-    <p class="font-heading text-xl font-light text-muted-foreground italic">
-      Chaque espace a été pensé pour allier authenticité et confort moderne.
-    </p>
+  <section class="py-16 px-8 md:px-16 lg:px-24 border-b border-border">
+    <div class="max-w-6xl mx-auto flex items-end justify-between flex-wrap gap-6">
+      <p class="font-heading text-2xl md:text-3xl font-light text-foreground italic max-w-lg">
+        Chaque espace a été pensé pour allier authenticité et confort moderne.
+      </p>
+      <span class="font-body text-xs text-muted-foreground tracking-widest uppercase">17 photos</span>
+    </div>
   </section>
 
   <!-- Gallery -->
-  <section class="pb-20 px-4 md:px-8 lg:px-12">
+  <section class="py-12 px-4 md:px-8 lg:px-12">
     <GalerieGrid client:load />
   </section>
 
   <!-- CTA -->
-  <section class="py-16 px-6 bg-primary text-primary-foreground text-center">
-    <h2 class="font-heading text-3xl md:text-4xl font-light mb-4">Envie de vivre cette expérience ?</h2>
-    <p class="font-body text-primary-foreground/75 mb-8 text-sm max-w-md mx-auto">
-      Réservez votre séjour et profitez de ce cadre d'exception en Sologne.
-    </p>
-    <a href="/reserver" class="inline-block px-8 py-3.5 bg-primary-foreground text-primary rounded-full font-body font-medium text-sm hover:bg-primary-foreground/90 transition-all duration-300">
-      Demander une réservation
-    </a>
+  <section class="py-32 px-8 md:px-16 lg:px-24 bg-foreground">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
+      <h2 class="font-heading text-5xl md:text-6xl font-light text-white leading-[1.05]">
+        Envie de vivre<br />
+        <span class="italic text-white/70">cette expérience ?</span>
+      </h2>
+      <div class="space-y-8">
+        <p class="font-body text-white/50 text-sm leading-relaxed max-w-sm">
+          Réservez votre séjour et profitez de ce cadre d'exception en Sologne.
+        </p>
+        <div class="flex items-center gap-6">
+          <a
+            href="/reserver"
+            class="px-7 py-3 bg-white text-stone-900 font-body font-medium text-sm rounded-full hover:bg-white/90 transition-all duration-300 tracking-wide"
+          >
+            Réserver
+          </a>
+          <a
+            href="mailto:info@gitedelormoy.fr"
+            class="font-body text-white/40 text-sm hover:text-white transition-colors duration-300 tracking-wide underline underline-offset-4 decoration-white/20 hover:decoration-white/50"
+          >
+            Nous écrire
+          </a>
+        </div>
+      </div>
+    </div>
   </section>
 </BaseLayout>
