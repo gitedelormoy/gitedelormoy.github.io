@@ -3,13 +3,12 @@ import { Wifi, Tv, UtensilsCrossed, Shirt, Heart, Car, Flame, AirVent, Baby, Zap
 const services = [
   { icon: Wifi, label: 'WiFi Fibre haut debit' },
   { icon: Tv, label: 'Télévision' },
-  { icon: UtensilsCrossed, label: 'Cuisine equipee' },
+  { icon: UtensilsCrossed, label: 'Cuisine équipée' },
   { icon: Shirt, label: 'Lave linge' },
-  { icon: Heart, label: 'Accueil equestre' },
   { icon: Car, label: 'Parking gratuit' },
   { icon: Flame, label: 'Plancha' },
   { icon: AirVent, label: 'Climatisation' },
-  { icon: Baby, label: 'Equipement bebe' },
+  { icon: Baby, label: 'Lit bébé' },
   { icon: BookOpen, label: 'Guides locaux' },
 ];
 export default function ServicesSection() {
