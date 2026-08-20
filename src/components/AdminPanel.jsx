@@ -4,6 +4,10 @@ import {
   getFirestore, collection, addDoc, deleteDoc, doc,
   onSnapshot, query, orderBy, serverTimestamp
 } from 'firebase/firestore';
+import { 
+  getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, 
+  signInWithEmailLink, onAuthStateChanged, signOut 
+} from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBiGQKhFbak81_zVBBeHOLGjSpuJ68EKmg",
@@ -16,6 +20,7 @@ const firebaseConfig = {
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 function parseICS(text) {
   const events = [];
@@ -53,12 +58,11 @@ const SOURCE_LABELS = {
   blocked: 'Bloqué',
 };
 
-const ADMIN_PASSWORD_HASH = '3f80bd037075810d8dafe63ecbe6913ea9fcd2652a6c24826201f8c126b82bcf';
-
 export default function AdminPanel() {
   const [authed, setAuthed] = useState(false);
-  const [password, setPassword] = useState('');
-  const [pwError, setPwError] = useState(false);
+  const [email, setEmail] = useState('');
+  const [emailSent, setEmailSent] = useState(false);
+  const [authError, setAuthError] = useState('');
 
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -69,23 +73,66 @@ export default function AdminPanel() {
   const [saving, setSaving] = useState(false);
   const [tab, setTab] = useState('list');
 
-  // Auth avec hash SHA-256
+  // 1. Écouter l'état de connexion de l'utilisateur
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user && user.email === 'pascale.pons6@wandoo.fr') {
+        setAuthed(true);
+      } else {
+        setAuthed(false);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // 2. Vérifier si l'utilisateur revient depuis le lien cliqué dans l'e-mail
+  useEffect(() => {
+    if (isSignInWithEmailLink(auth, window.location.href)) {
+      let savedEmail = window.localStorage.getItem('emailForSignIn');
+      if (!savedEmail) {
+        savedEmail = window.prompt("Veuillez confirmer votre adresse e-mail de sécurité :");
+      }
+      
+      signInWithEmailLink(auth, savedEmail, window.location.href)
+        .then(() => {
+          window.localStorage.removeItem('emailForSignIn');
+          window.history.replaceState({}, document.title, window.location.pathname); // Nettoie l'URL
+        })
+        .catch((error) => {
+          setAuthError("Le lien est expiré ou invalide. Veuillez réessayer.");
+        });
+    }
+  }, []);
+
+  // 3. Envoyer le lien magique
   const handleLogin = async (e) => {
     e.preventDefault();
-    const encoder = new TextEncoder();
-    const data = encoder.encode(password);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    if (hashHex === ADMIN_PASSWORD_HASH) {
-      setAuthed(true);
-    } else {
-      setPwError(true);
-      setTimeout(() => setPwError(false), 2000);
+    setAuthError('');
+    
+    if (email !== 'pascale.pons6@wandoo.fr') {
+      setAuthError("Accès non autorisé pour cette adresse e-mail.");
+      return;
+    }
+
+    const actionCodeSettings = {
+      url: window.location.href, // Redirige vers la page admin après le clic
+      handleCodeInApp: true,
+    };
+
+    try {
+      await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+      window.localStorage.setItem('emailForSignIn', email);
+      setEmailSent(true);
+    } catch (error) {
+      setAuthError("Erreur lors de l'envoi de l'e-mail. Vérifiez votre configuration Firebase.");
     }
   };
 
-  // Load reservations
+  const handleLogout = () => {
+    signOut(auth);
+  };
+
+  // Chargement des réservations (activé uniquement si connecté)
   useEffect(() => {
     if (!authed) return;
     const q = query(collection(db, 'reservations'), orderBy('arrival'));
@@ -112,7 +159,7 @@ export default function AdminPanel() {
 
   // Delete reservation
   const handleDelete = async (id, label) => {
-    if (!confirm(`Supprimer la réservation "${label}" ?`)) return;
+    if (!window.confirm(`Supprimer la réservation "${label}" ?`)) return;
     await deleteDoc(doc(db, 'reservations', id));
   };
 
@@ -166,21 +213,31 @@ export default function AdminPanel() {
             <p className="font-body text-sm text-muted-foreground">Gîte de l'Ormoy</p>
           </div>
           <form onSubmit={handleLogin} className="bg-card rounded-2xl border border-border p-8 space-y-4 shadow-sm">
-            <div>
-              <label className="block font-body text-sm font-medium text-foreground mb-1.5">Mot de passe</label>
-              <input
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className={`w-full px-4 py-2.5 rounded-xl border bg-background font-body text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors ${pwError ? 'border-red-400 focus:ring-red-200' : 'border-border focus:border-primary'}`}
-                autoFocus
-              />
-              {pwError && <p className="font-body text-xs text-red-500 mt-1">Mot de passe incorrect</p>}
-            </div>
-            <button type="submit" className="w-full py-3 bg-primary text-primary-foreground rounded-full font-body font-medium text-sm hover:bg-primary/90 transition-all">
-              Accéder
-            </button>
+            
+            {emailSent ? (
+              <div className="bg-green-50 text-green-700 p-4 rounded-xl font-body text-sm text-center border border-green-200">
+                ✅ Lien envoyé ! Allez vérifier la boîte mail de <strong>{email}</strong> et cliquez sur le lien pour vous connecter.
+              </div>
+            ) : (
+              <>
+                <div>
+                  <label className="block font-body text-sm font-medium text-foreground mb-1.5">Adresse e-mail autorisée</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    placeholder="Entrez votre e-mail..."
+                    className={`w-full px-4 py-2.5 rounded-xl border bg-background font-body text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors ${authError ? 'border-red-400 focus:ring-red-200' : 'border-border focus:border-primary'}`}
+                    autoFocus
+                  />
+                  {authError && <p className="font-body text-xs text-red-500 mt-2">{authError}</p>}
+                </div>
+                <button type="submit" className="w-full py-3 bg-primary text-primary-foreground rounded-full font-body font-medium text-sm hover:bg-primary/90 transition-all">
+                  Recevoir mon lien sécurisé
+                </button>
+              </>
+            )}
+            
           </form>
         </div>
       </div>
@@ -202,7 +259,7 @@ export default function AdminPanel() {
             ← Voir le site
           </a>
           <button
-            onClick={() => setAuthed(false)}
+            onClick={handleLogout}
             className="font-body text-xs bg-primary-foreground/10 hover:bg-primary-foreground/20 px-3 py-1.5 rounded-full transition-colors"
           >
             Déconnexion
