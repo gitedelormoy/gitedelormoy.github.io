@@ -5,8 +5,8 @@ import {
   onSnapshot, query, orderBy, serverTimestamp
 } from 'firebase/firestore';
 import { 
-  getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, 
-  signInWithEmailLink, onAuthStateChanged, signOut 
+  getAuth, GoogleAuthProvider, signInWithPopup, 
+  onAuthStateChanged, signOut 
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -21,9 +21,10 @@ const firebaseConfig = {
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 const db = getFirestore(app);
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
-// L'adresse e-mail est masquée en Base64 pour éviter le spam par les robots GitHub
-const ADMIN_EMAIL_B64 = "cGFzY2FsZS5wb25zNkB3YW5hZG9vLmZy";
+// Ton adresse e-mail Wanadoo rattachée à ton compte Google
+const AUTHORIZED_EMAIL = "pascale.pons6@wanadoo.fr";
 
 function parseICS(text) {
   const events = [];
@@ -63,8 +64,6 @@ const SOURCE_LABELS = {
 
 export default function AdminPanel() {
   const [authed, setAuthed] = useState(false);
-  const [email, setEmail] = useState('');
-  const [emailSent, setEmailSent] = useState(false);
   const [authError, setAuthError] = useState('');
 
   const [reservations, setReservations] = useState([]);
@@ -76,12 +75,16 @@ export default function AdminPanel() {
   const [saving, setSaving] = useState(false);
   const [tab, setTab] = useState('list');
 
-  // 1. Écouter l'état de connexion de l'utilisateur
+  // Surveille l'état de connexion Google
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      // on décode l'e-mail à la volée avec atob()
-      if (user && user.email === atob(ADMIN_EMAIL_B64)) {
+      if (user && user.email === AUTHORIZED_EMAIL) {
         setAuthed(true);
+        setAuthError('');
+      } else if (user) {
+        setAuthed(false);
+        setAuthError(`Le compte ${user.email} n'est pas autorisé.`);
+        signOut(auth);
       } else {
         setAuthed(false);
       }
@@ -89,47 +92,13 @@ export default function AdminPanel() {
     return () => unsubscribe();
   }, []);
 
-  // 2. Vérifier si l'utilisateur revient depuis le lien cliqué
-  useEffect(() => {
-    if (isSignInWithEmailLink(auth, window.location.href)) {
-      let savedEmail = window.localStorage.getItem('emailForSignIn');
-      if (!savedEmail) {
-        savedEmail = window.prompt("Veuillez confirmer votre adresse e-mail de sécurité :");
-      }
-      
-      signInWithEmailLink(auth, savedEmail, window.location.href)
-        .then(() => {
-          window.localStorage.removeItem('emailForSignIn');
-          window.history.replaceState({}, document.title, window.location.pathname);
-        })
-        .catch((error) => {
-          setAuthError("Le lien est expiré ou invalide. Veuillez réessayer.");
-        });
-    }
-  }, []);
-
-  // 3. Envoyer le lien magique
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setAuthError('');
-    
-    // Vérification avec l'e-mail décodé
-    if (email !== atob(ADMIN_EMAIL_B64)) {
-      setAuthError("Accès non autorisé pour cette adresse e-mail.");
-      return;
-    }
-
-    const actionCodeSettings = {
-      url: window.location.href,
-      handleCodeInApp: true,
-    };
-
+  // Déclencheur de la popup Google
+  const handleGoogleLogin = async () => {
     try {
-      await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-      window.localStorage.setItem('emailForSignIn', email);
-      setEmailSent(true);
+      setAuthError('');
+      await signInWithPopup(auth, googleProvider);
     } catch (error) {
-      setAuthError("Erreur lors de l'envoi de l'e-mail. Vérifiez votre configuration Firebase.");
+      setAuthError("Erreur de connexion Google. Veuillez réessayer.");
     }
   };
 
@@ -214,33 +183,26 @@ export default function AdminPanel() {
             <h1 className="font-heading text-4xl font-light text-foreground mb-2">Administration</h1>
             <p className="font-body text-sm text-muted-foreground">Gîte de l'Ormoy</p>
           </div>
-          <form onSubmit={handleLogin} className="bg-card rounded-2xl border border-border p-8 space-y-4 shadow-sm">
+          <div className="bg-card rounded-2xl border border-border p-8 space-y-5 shadow-sm text-center">
+            <p className="font-body text-sm text-foreground/80">
+              Connexion sécurisée réservée aux administrateurs.
+            </p>
             
-            {emailSent ? (
-              <div className="bg-green-50 text-green-700 p-4 rounded-xl font-body text-sm text-center border border-green-200">
-                ✅ Lien envoyé ! Allez vérifier la boîte mail de <strong>{email}</strong> et cliquez sur le lien pour vous connecter.
-              </div>
-            ) : (
-              <>
-                <div>
-                  <label className="block font-body text-sm font-medium text-foreground mb-1.5">Adresse e-mail autorisée</label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    placeholder="Entrez votre e-mail..."
-                    className={`w-full px-4 py-2.5 rounded-xl border bg-background font-body text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors ${authError ? 'border-red-400 focus:ring-red-200' : 'border-border focus:border-primary'}`}
-                    autoFocus
-                  />
-                  {authError && <p className="font-body text-xs text-red-500 mt-2">{authError}</p>}
-                </div>
-                <button type="submit" className="w-full py-3 bg-primary text-primary-foreground rounded-full font-body font-medium text-sm hover:bg-primary/90 transition-all">
-                  Recevoir mon lien sécurisé
-                </button>
-              </>
-            )}
-            
-          </form>
+            <button
+              onClick={handleGoogleLogin}
+              className="w-full py-3 px-4 bg-white hover:bg-stone-50 text-stone-700 border border-border rounded-full font-body font-medium text-sm transition-all shadow-sm flex items-center justify-center gap-3 cursor-pointer"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              Continuer avec Google
+            </button>
+
+            {authError && <p className="font-body text-xs text-red-500 mt-2">{authError}</p>}
+          </div>
         </div>
       </div>
     );
@@ -262,7 +224,7 @@ export default function AdminPanel() {
           </a>
           <button
             onClick={handleLogout}
-            className="font-body text-xs bg-primary-foreground/10 hover:bg-primary-foreground/20 px-3 py-1.5 rounded-full transition-colors"
+            className="font-body text-xs bg-primary-foreground/10 hover:bg-primary-foreground/20 px-3 py-1.5 rounded-full transition-colors cursor-pointer"
           >
             Déconnexion
           </button>
@@ -293,7 +255,7 @@ export default function AdminPanel() {
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className={`px-4 py-2 rounded-lg font-body text-sm transition-all ${tab === t.id ? 'bg-card shadow-sm text-foreground font-medium' : 'text-muted-foreground hover:text-foreground'}`}
+              className={`px-4 py-2 rounded-lg font-body text-sm transition-all cursor-pointer ${tab === t.id ? 'bg-card shadow-sm text-foreground font-medium' : 'text-muted-foreground hover:text-foreground'}`}
             >
               {t.label}
             </button>
@@ -327,7 +289,7 @@ export default function AdminPanel() {
                     </div>
                     <button
                       onClick={() => handleDelete(r.id, r.label)}
-                      className="w-8 h-8 rounded-lg bg-red-50 text-red-400 hover:bg-red-100 hover:text-red-600 flex items-center justify-center transition-colors shrink-0"
+                      className="w-8 h-8 rounded-lg bg-red-50 text-red-400 hover:bg-red-100 hover:text-red-600 flex items-center justify-center transition-colors shrink-0 cursor-pointer"
                     >
                       ✕
                     </button>
@@ -349,7 +311,7 @@ export default function AdminPanel() {
                             </p>
                           </div>
                         </div>
-                        <button onClick={() => handleDelete(r.id, r.label)} className="w-8 h-8 rounded-lg bg-red-50 text-red-400 hover:bg-red-100 flex items-center justify-center transition-colors shrink-0">✕</button>
+                        <button onClick={() => handleDelete(r.id, r.label)} className="w-8 h-8 rounded-lg bg-red-50 text-red-400 hover:bg-red-100 flex items-center justify-center transition-colors shrink-0 cursor-pointer">✕</button>
                       </div>
                     ))}
                   </>
@@ -416,7 +378,7 @@ export default function AdminPanel() {
               </div>
               <button
                 type="submit" disabled={saving}
-                className="w-full py-3 bg-primary text-primary-foreground rounded-full font-body font-medium text-sm hover:bg-primary/90 transition-all disabled:opacity-60"
+                className="w-full py-3 bg-primary text-primary-foreground rounded-full font-body font-medium text-sm hover:bg-primary/90 transition-all disabled:opacity-60 cursor-pointer"
               >
                 {saving ? 'Enregistrement...' : 'Ajouter la réservation'}
               </button>
@@ -444,7 +406,7 @@ export default function AdminPanel() {
               <button
                 onClick={handleSync}
                 disabled={syncing}
-                className="w-full py-3 bg-primary text-primary-foreground rounded-full font-body font-medium text-sm hover:bg-primary/90 transition-all disabled:opacity-60 mt-4 flex items-center justify-center gap-2"
+                className="w-full py-3 bg-primary text-primary-foreground rounded-full font-body font-medium text-sm hover:bg-primary/90 transition-all disabled:opacity-60 mt-4 flex items-center justify-center gap-2 cursor-pointer"
               >
                 {syncing ? (
                   <>
