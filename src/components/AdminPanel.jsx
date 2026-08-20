@@ -22,6 +22,9 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0
 const db = getFirestore(app);
 const auth = getAuth(app);
 
+// L'adresse e-mail est masquée en Base64 pour éviter le spam par les robots GitHub
+const ADMIN_EMAIL_B64 = "cGFzY2FsZS5wb25zNkB3YW5hZG9vLmZy";
+
 function parseICS(text) {
   const events = [];
   const blocks = text.split('BEGIN:VEVENT');
@@ -76,7 +79,8 @@ export default function AdminPanel() {
   // 1. Écouter l'état de connexion de l'utilisateur
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user && user.email === 'pascale.pons6@wandoo.fr') {
+      // on décode l'e-mail à la volée avec atob()
+      if (user && user.email === atob(ADMIN_EMAIL_B64)) {
         setAuthed(true);
       } else {
         setAuthed(false);
@@ -85,7 +89,7 @@ export default function AdminPanel() {
     return () => unsubscribe();
   }, []);
 
-  // 2. Vérifier si l'utilisateur revient depuis le lien cliqué dans l'e-mail
+  // 2. Vérifier si l'utilisateur revient depuis le lien cliqué
   useEffect(() => {
     if (isSignInWithEmailLink(auth, window.location.href)) {
       let savedEmail = window.localStorage.getItem('emailForSignIn');
@@ -96,7 +100,7 @@ export default function AdminPanel() {
       signInWithEmailLink(auth, savedEmail, window.location.href)
         .then(() => {
           window.localStorage.removeItem('emailForSignIn');
-          window.history.replaceState({}, document.title, window.location.pathname); // Nettoie l'URL
+          window.history.replaceState({}, document.title, window.location.pathname);
         })
         .catch((error) => {
           setAuthError("Le lien est expiré ou invalide. Veuillez réessayer.");
@@ -109,13 +113,14 @@ export default function AdminPanel() {
     e.preventDefault();
     setAuthError('');
     
-    if (email !== 'pascale.pons6@wandoo.fr') {
+    // Vérification avec l'e-mail décodé
+    if (email !== atob(ADMIN_EMAIL_B64)) {
       setAuthError("Accès non autorisé pour cette adresse e-mail.");
       return;
     }
 
     const actionCodeSettings = {
-      url: window.location.href, // Redirige vers la page admin après le clic
+      url: window.location.href,
       handleCodeInApp: true,
     };
 
@@ -132,7 +137,7 @@ export default function AdminPanel() {
     signOut(auth);
   };
 
-  // Chargement des réservations (activé uniquement si connecté)
+  // Chargement des réservations
   useEffect(() => {
     if (!authed) return;
     const q = query(collection(db, 'reservations'), orderBy('arrival'));
@@ -143,7 +148,6 @@ export default function AdminPanel() {
     return unsub;
   }, [authed]);
 
-  // Add reservation
   const handleAdd = async (e) => {
     e.preventDefault();
     if (!form.label || !form.arrival || !form.departure) return;
@@ -157,13 +161,11 @@ export default function AdminPanel() {
     setTab('list');
   };
 
-  // Delete reservation
   const handleDelete = async (id, label) => {
     if (!window.confirm(`Supprimer la réservation "${label}" ?`)) return;
     await deleteDoc(doc(db, 'reservations', id));
   };
 
-  // Sync iCal
   const handleSync = async () => {
     setSyncing(true);
     setSyncLog('Démarrage de la synchronisation...\n');
