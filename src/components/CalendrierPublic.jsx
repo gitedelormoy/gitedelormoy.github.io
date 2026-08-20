@@ -116,30 +116,22 @@ export default function CalendrierPublic() {
             const date = new Date(currentYear, currentMonth, day);
             const isPast = isDatePast(date);
             const blocked = isDateBlocked(date, reservations);
-
-            // Find which reservation this day belongs to
-            const resa = reservations.find(r => {
-              const d = date.toISOString().slice(0, 10);
-              return d >= r.arrival && d < r.departure;
-            });
-
             const isToday = date.toISOString().slice(0, 10) === today.toISOString().slice(0, 10);
 
             return (
               <div
                 key={day}
                 className={`
-                  aspect-square rounded-lg flex items-center justify-center text-sm font-body
-                  transition-all duration-200 relative
+                  aspect-square rounded-md flex items-center justify-center text-sm font-body
+                  cursor-default select-none
                   ${isPast ? 'opacity-30' : ''}
-                  ${isToday ? 'ring-2 ring-primary ring-offset-1' : ''}
+                  ${isToday ? 'border border-primary text-primary font-semibold' : ''}
                   ${blocked
-                    ? 'text-white font-medium'
-                    : 'text-foreground hover:bg-muted/60'
+                    ? 'text-white font-medium opacity-90'
+                    : 'text-foreground'
                   }
                 `}
                 style={blocked ? { backgroundColor: BLOCKED_COLOR } : {}}
-                
               >
                 {day}
               </div>
