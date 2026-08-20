@@ -28,14 +28,20 @@ export default function Navbar() {
   useEffect(() => {
     setCurrentPath(window.location.pathname);
     setShowBanner(isClimatisationSeason());
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    
+    const handleScroll = () => {
+      // On déclenche l'animation plus tard (à 250px de défilement)
+      // pour laisser le temps de passer la photo sombre
+      setScrolled(window.scrollY > 250);
+    };
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50">
-      {/* Bandeau climatisation — visible du 1er mai au 30 septembre */}
+      {/* Bandeau climatisation */}
       {showBanner && (
         <div className="bg-primary text-primary-foreground text-center py-2 px-4">
           <p className="font-body text-xs tracking-[0.15em] uppercase">
@@ -45,22 +51,23 @@ export default function Navbar() {
       )}
 
       <nav
-        className={`transition-all duration-500 ${
+        // On a passé la transition à duration-700 pour un fondu très élégant
+        className={`transition-all duration-700 ${
           scrolled
-            ? 'bg-background/98 backdrop-blur-md border-b border-border/50 py-3'
+            ? 'bg-background/98 backdrop-blur-md border-b border-border/50 py-3 shadow-sm'
             : 'bg-transparent py-6'
         }`}
       >
         <div className="max-w-7xl mx-auto px-8 md:px-16 flex items-center justify-between">
 
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2.5">
+          <a href="/" className="flex items-center gap-2.5 group">
             <img
               src="https://res.cloudinary.com/dpgmwola2/image/upload/v1785775632/gite-de-l-ormoy-logo-big-Icon_gp9vcy.png"
               alt="Logo Gîte de l'Ormoy"
-              className="h-8 w-auto rounded-full"
+              className="h-8 w-auto rounded-full group-hover:scale-105 transition-transform duration-300"
             />
-            <span className={`font-heading text-base font-light tracking-widest transition-colors duration-500 ${
+            <span className={`font-heading text-base font-light tracking-widest transition-colors duration-700 ${
               scrolled ? 'text-foreground' : 'text-white'
             }`}>
               Le Gîte de l'Ormoy
@@ -73,7 +80,7 @@ export default function Navbar() {
               <a
                 key={link.path}
                 href={link.path}
-                className={`text-xs font-body tracking-[0.12em] uppercase transition-all duration-300 ${
+                className={`text-xs font-body tracking-[0.12em] uppercase transition-colors duration-700 ${
                   currentPath === link.path
                     ? scrolled ? 'text-primary' : 'text-white'
                     : scrolled
@@ -86,10 +93,10 @@ export default function Navbar() {
             ))}
             <a
               href="/reserver"
-              className={`text-xs font-body tracking-[0.12em] uppercase transition-all duration-300 px-5 py-2 rounded-full ${
+              className={`text-xs font-body tracking-[0.12em] uppercase transition-all duration-500 px-5 py-2 rounded-full ${
                 scrolled
                   ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                  : 'border border-white/40 text-white hover:bg-white/10'
+                  : 'border border-white/40 text-white hover:bg-white/20'
               }`}
             >
               Réserver
@@ -99,7 +106,7 @@ export default function Navbar() {
           {/* Mobile toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className={`md:hidden p-2 transition-colors ${scrolled ? 'text-foreground' : 'text-white'}`}
+            className={`md:hidden p-2 transition-colors duration-700 ${scrolled ? 'text-foreground' : 'text-white'}`}
             aria-label="Menu"
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -108,7 +115,7 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="md:hidden bg-background border-t border-border">
+          <div className="md:hidden bg-background border-t border-border absolute top-full left-0 w-full shadow-lg">
             <div className="px-8 py-8 space-y-6">
               <a
                 href="/"
