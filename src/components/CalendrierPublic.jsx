@@ -71,8 +71,6 @@ export default function CalendrierPublic() {
   for (let i = 0; i < firstDay; i++) cells.push(null);
   for (let d = 1; d <= daysInMonth; d++) cells.push(d);
 
-  const BLOCKED_COLOR = '#2D5A3D';
-
   return (
     <div className="max-w-3xl mx-auto">
       {/* Header navigation */}
@@ -95,7 +93,7 @@ export default function CalendrierPublic() {
       </div>
 
       {/* Day headers */}
-      <div className="grid grid-cols-7 mb-2">
+      <div className="grid grid-cols-7 mb-4">
         {DAYS_FR.map(d => (
           <div key={d} className="text-center font-body text-xs text-muted-foreground py-2 tracking-wide uppercase">
             {d}
@@ -109,7 +107,7 @@ export default function CalendrierPublic() {
           <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
         </div>
       ) : (
-        <div className="grid grid-cols-7 gap-1">
+        <div className="grid grid-cols-7 gap-y-4 gap-x-1">
           {cells.map((day, i) => {
             if (!day) return <div key={`empty-${i}`} />;
 
@@ -122,16 +120,15 @@ export default function CalendrierPublic() {
               <div
                 key={day}
                 className={`
-                  aspect-square rounded-md flex items-center justify-center text-sm font-body
-                  cursor-default select-none
+                  flex items-center justify-center text-sm font-body
+                  cursor-default select-none py-1
                   ${isPast ? 'opacity-30' : ''}
-                  ${isToday ? 'border border-primary text-primary font-semibold' : ''}
+                  ${isToday && !blocked ? 'font-bold text-primary underline underline-offset-4' : ''}
                   ${blocked
-                    ? 'text-white font-medium opacity-90'
+                    ? 'text-muted-foreground/50 line-through decoration-muted-foreground/50'
                     : 'text-foreground'
                   }
                 `}
-                style={blocked ? { backgroundColor: BLOCKED_COLOR } : {}}
               >
                 {day}
               </div>
@@ -140,15 +137,15 @@ export default function CalendrierPublic() {
         </div>
       )}
 
-      {/* Légende */}
-      <div className="flex justify-center gap-6 mt-6 font-body text-xs text-muted-foreground">
-        <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-sm inline-block" style={{ background: BLOCKED_COLOR }} />
-          Réservé
+      {/* Légende mise à jour */}
+      <div className="flex justify-center gap-8 mt-8 font-body text-sm text-muted-foreground">
+        <div className="flex items-center gap-2">
+          <span className="line-through text-muted-foreground/50 decoration-muted-foreground/50">24</span>
+          <span>Réservé</span>
         </div>
-        <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-sm border border-border inline-block bg-card" />
-          Disponible
+        <div className="flex items-center gap-2">
+          <span className="text-foreground">25</span>
+          <span>Disponible</span>
         </div>
       </div>
     </div>
