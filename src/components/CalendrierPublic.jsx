@@ -43,7 +43,6 @@ export default function CalendrierPublic() {
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedDate, setSelectedDate] = useState(null); // Nouvelle ligne pour mémoriser le clic
 
   useEffect(() => {
     const q = query(collection(db, 'reservations'), orderBy('arrival'));
@@ -63,23 +62,6 @@ export default function CalendrierPublic() {
     else setCurrentMonth(m => m + 1);
   };
 
-  // Fonction déclenchée au clic sur une date
-  const handleDateClick = (date, isPast, isBlocked) => {
-    if (isPast || isBlocked) return; // On ne fait rien si c'est passé ou réservé
-    
-    const dateString = date.toISOString().slice(0, 10);
-    setSelectedDate(dateString);
-
-    // 1. On envoie un signal global que le formulaire va écouter
-    window.dispatchEvent(new CustomEvent('ormoy-date-selected', { detail: date }));
-
-    // 2. On fait scroller la page doucement vers le formulaire
-    const formElement = document.querySelector('form');
-    if (formElement) {
-      formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  };
-
   const daysInMonth = getDaysInMonth(currentYear, currentMonth);
   const firstDay = getFirstDayOfMonth(currentYear, currentMonth);
 
@@ -89,18 +71,35 @@ export default function CalendrierPublic() {
 
   return (
     <div className="max-w-3xl mx-auto">
+      {/* Navigation de l'en-tête */}
       <div className="flex items-center justify-between mb-6 px-2">
-        <button onClick={prevMonth} className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors font-body text-foreground">‹</button>
-        <h3 className="font-heading text-2xl font-light text-foreground">{MONTHS_FR[currentMonth]} {currentYear}</h3>
-        <button onClick={nextMonth} className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors font-body text-foreground">›</button>
+        <button
+          onClick={prevMonth}
+          className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors font-body text-foreground"
+        >
+          ‹
+        </button>
+        <h3 className="font-heading text-2xl font-light text-foreground">
+          {MONTHS_FR[currentMonth]} {currentYear}
+        </h3>
+        <button
+          onClick={nextMonth}
+          className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors font-body text-foreground"
+        >
+          ›
+        </button>
       </div>
 
+      {/* Jours de la semaine */}
       <div className="grid grid-cols-7 mb-4">
         {DAYS_FR.map(d => (
-          <div key={d} className="text-center font-body text-xs text-muted-foreground py-2 tracking-wide uppercase">{d}</div>
+          <div key={d} className="text-center font-body text-xs text-muted-foreground py-2 tracking-wide uppercase">
+            {d}
+          </div>
         ))}
       </div>
 
+      {/* Grille du calendrier */}
       {loading ? (
         <div className="h-64 flex items-center justify-center">
           <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
@@ -112,21 +111,21 @@ export default function CalendrierPublic() {
 
             const date = new Date(currentYear, currentMonth, day);
             const isPast = isDatePast(date);
-            const isBlocked = isDateBlocked(date, reservations);
-            const dateString = date.toISOString().slice(0, 10);
-            const isSelected = selectedDate === dateString;
+            const blocked = isDateBlocked(date, reservations);
+            const isToday = date.toISOString().slice(0, 10) === today.toISOString().slice(0, 10);
 
             return (
               <div
                 key={day}
-                onClick={() => handleDateClick(date, isPast, isBlocked)}
                 className={`
-                  flex items-center justify-center text-sm font-body py-2 rounded-md transition-all
-                  ${isPast || isBlocked ? 'cursor-not-allowed' : 'cursor-pointer'}
-                  ${isPast && !isBlocked ? 'opacity-30' : ''}
-                  ${isBlocked ? 'text-muted-foreground/50 line-through decoration-muted-foreground/50' : 'hover:bg-primary/10'}
-                  ${isSelected ? 'bg-primary text-primary-foreground font-bold hover:bg-primary' : ''}
-                  ${!isBlocked && !isSelected ? 'text-foreground' : ''}
+                  flex items-center justify-center text-sm font-body
+                  cursor-default select-none py-1
+                  ${isPast ? 'opacity-30' : ''}
+                  ${isToday && !blocked ? 'font-bold text-primary underline underline-offset-4' : ''}
+                  ${blocked
+                    ? 'text-muted-foreground/50 line-through decoration-muted-foreground/50'
+                    : 'text-foreground'
+                  }
                 `}
               >
                 {day}
@@ -136,19 +135,9 @@ export default function CalendrierPublic() {
         </div>
       )}
 
-      <div className="flex justify-center gap-8 mt-8 font-body text-sm text-muted-foreground">
-        <div className="flex items-center gap-2">
-          <span className="line-through text-muted-foreground/50 decoration-muted-foreground/50">24</span>
-          <span>Réservé</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-foreground">25</span>
-          <span>Disponible</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="bg-primary text-primary-foreground px-2 py-0.5 rounded-sm">26</span>
-          <span>Sélectionné</span>
-        </div>
+      {/* Message d'instruction (remplace l'ancienne légende) */}
+      <div className="text-center mt-8 font-body text-sm text-muted-foreground">
+        Les dates de votre séjour sont à sélectionner directement dans le formulaire ci-dessous ↓
       </div>
     </div>
   );
