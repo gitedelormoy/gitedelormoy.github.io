@@ -13,7 +13,7 @@ export default function IntroSection() {
               <span className="italic text-primary">au cœur de la France</span>
             </h2>
             
-              <a href="/le-gite"
+            <a href="/le-gite"
               className="inline-flex items-center gap-3 font-body text-sm text-foreground/60 hover:text-primary transition-colors duration-300 tracking-wide group"
             >
               <span className="w-8 h-px bg-current transition-all duration-300 group-hover:w-12" />
@@ -37,10 +37,11 @@ export default function IntroSection() {
           {[
             { value: '6', label: 'Couchages' },
             { value: '3', label: 'Chambres' },
-            { value: '4★', label: 'Meublé de tourisme' },
+            // C'est ici que l'on sépare le 4 de l'étoile pour ajuster le style
+            { value: <>4<span className="text-2xl md:text-3xl text-primary ml-1 align-top">★</span></>, label: 'Meublé de tourisme' },
           ].map((stat, i) => (
             <div key={i} className={`py-6 ${i > 0 ? 'border-l border-border pl-8 md:pl-12' : ''}`}>
-              <p className="font-heading text-4xl md:text-5xl font-light text-foreground">{stat.value}</p>
+              <p className="font-heading text-4xl md:text-5xl font-light text-foreground flex items-center">{stat.value}</p>
               <p className="font-body text-xs text-muted-foreground mt-2 tracking-wide uppercase">{stat.label}</p>
             </div>
           ))}
