@@ -1,4 +1,5 @@
 import React from 'react';
+import { Star } from 'lucide-react'; // On importe la belle étoile SVG
 
 export default function IntroSection() {
   return (
@@ -37,11 +38,23 @@ export default function IntroSection() {
           {[
             { value: '6', label: 'Couchages' },
             { value: '3', label: 'Chambres' },
-            // C'est ici que l'on sépare le 4 de l'étoile pour ajuster le style
-            { value: <>4<span className="text-2xl md:text-3xl text-primary ml-1 align-top">★</span></>, label: 'Meublé de tourisme' },
+            { 
+              // On génère 4 icônes d'étoiles parfaitement alignées
+              value: (
+                <div className="flex gap-1.5 items-center">
+                  {[...Array(4)].map((_, i) => (
+                    <Star key={i} className="w-7 h-7 md:w-9 md:h-9 fill-primary text-primary" />
+                  ))}
+                </div>
+              ), 
+              label: 'Meublé de tourisme' 
+            },
           ].map((stat, i) => (
             <div key={i} className={`py-6 ${i > 0 ? 'border-l border-border pl-8 md:pl-12' : ''}`}>
-              <p className="font-heading text-4xl md:text-5xl font-light text-foreground flex items-center">{stat.value}</p>
+              {/* On utilise un div avec une hauteur fixe (h-12) pour que les 3 blocs soient parfaitement alignés */}
+              <div className="font-heading text-4xl md:text-5xl font-light text-foreground flex items-center h-12">
+                {stat.value}
+              </div>
               <p className="font-body text-xs text-muted-foreground mt-2 tracking-wide uppercase">{stat.label}</p>
             </div>
           ))}
