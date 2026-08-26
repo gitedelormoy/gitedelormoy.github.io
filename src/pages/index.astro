@@ -8,11 +8,27 @@ import NearbySection from '../components/home/NearbySection.jsx';
 import CTASection from '../components/home/CTASection.jsx';
 ---
 
-<BaseLayout title="Gîte de l'Ormoy — 4 étoiles Sologne & Berry">
+<BaseLayout 
+  title="Gîte de l'Ormoy | Location 4 étoiles Sologne, Berry et Châteaux de la Loire"
+  description="Séjournez au Gîte de l'Ormoy, une location de charme 4 étoiles. Idéalement situé pour visiter Bourges, Vierzon, Sancerre et les splendeurs du Val de Loire."
+>
   <HeroSection client:load />
   <IntroSection />
   <ServicesSection />
   <NearbySection />
   <TestimonialsSection client:load />
+  
+  {/* Nouveau bloc SEO textuel : Élégant pour le visiteur, parfait pour Google */}
+  <section className="max-w-4xl mx-auto px-8 py-16 md:py-20 text-center">
+    <h2 className="font-heading text-2xl md:text-3xl font-light text-foreground mb-6">
+      Votre point de départ idéal entre le Cher et le Val de Loire
+    </h2>
+    <p className="font-body text-sm md:text-base text-foreground/70 leading-relaxed">
+      Niché à la croisée de la <strong>Sologne</strong> et du <strong>Berry</strong>, le Gîte de l'Ormoy vous offre un accès privilégié aux trésors de la région. 
+      À quelques minutes du centre historique de <strong>Bourges</strong> et de <strong>Vierzon</strong>, profitez d'une étape de charme pour explorer le célèbre vignoble de <strong>Sancerre</strong> 
+      ou entamer votre route vers les majestueux <strong>Châteaux de la Loire</strong>.
+    </p>
+  </section>
+
   <CTASection />
 </BaseLayout>
