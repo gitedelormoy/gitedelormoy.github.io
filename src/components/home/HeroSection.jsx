@@ -19,13 +19,13 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-[100dvh] overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center scale-[1.02]"
-        style={{
-          backgroundImage:
-            "url(https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496829/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--4-min_ks62ta.jpg)",
-        }}
+      {/* Remplacement du div background par une vraie balise img optimisée SEO */}
+      <img
+        src="https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496829/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--4-min_ks62ta.jpg"
+        alt="Intérieur chaleureux et salon lumineux du Gîte de l'Ormoy, location de vacances 4 étoiles dans le Cher"
+        className="absolute inset-0 w-full h-full object-cover object-center scale-[1.02]"
       />
+      
       <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/30 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
@@ -42,7 +42,7 @@ export default function HeroSection() {
             Un havre de paix au coeur de la France, où le charme champêtre rencontre le confort moderne.
           </p>
 
-          {/* Badge climatisation — visible du 1er mai au 30 septembre */}
+          {/* Badge climatisation */}
           {showClim && (
             <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm">
               <span className="text-sm">❄️</span>
