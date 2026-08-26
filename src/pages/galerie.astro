@@ -9,12 +9,14 @@ import GalerieGrid from '../components/GalerieGrid.jsx';
 >
   <!-- Hero -->
   <section class="relative h-[55vh] min-h-[360px] overflow-hidden">
-    <div
-      class="absolute inset-0 bg-cover bg-center"
-      style="background-image: url(https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496846/Extrtiot_gjxge4.png)"
-    >
-      <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
-    </div>
+    <!-- Vraie balise image pour le SEO local -->
+    <img
+      src="https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496846/Extrtiot_gjxge4.png"
+      alt="Extérieur du Gîte de l'Ormoy, maison de caractère avec grand jardin près de Vierzon et Bourges"
+      class="absolute inset-0 w-full h-full object-cover object-center"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+    
     <div class="relative z-10 h-full flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-12">
       <h1 class="font-heading text-5xl md:text-7xl font-light text-white leading-[0.95]">
         Galerie<br />
