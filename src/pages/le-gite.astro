@@ -83,19 +83,32 @@ const amenities = [
       </div>
 
       <!-- Stats -->
-      <div class="mt-20 pt-10 border-t border-border grid grid-cols-3 gap-0">
+     <div class="mt-20 pt-10 border-t border-border grid grid-cols-3 gap-0">
         {[
           { value: '3', label: 'Chambres' },
           { value: '6', label: 'Couchages' },
-          { value: '4★', label: 'Meublé de tourisme' },
+          { 
+            value: (
+              <div class="flex gap-1.5 items-center">
+                {[...Array(4)].map(() => (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7 md:w-9 md:h-9 text-primary">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                ))}
+              </div>
+            ), 
+            label: 'Meublé de tourisme' 
+          },
         ].map((stat, i) => (
           <div class={`py-6 ${i > 0 ? 'border-l border-border pl-8 md:pl-12' : ''}`}>
-            <p class="font-heading text-4xl md:text-5xl font-light text-foreground">{stat.value}</p>
+            {/* Ajout du flex et d'une hauteur fixe (h-12) pour un alignement parfait */}
+            <div class="font-heading text-4xl md:text-5xl font-light text-foreground flex items-center h-12">
+              {stat.value}
+            </div>
             <p class="font-body text-xs text-muted-foreground mt-2 tracking-wide uppercase">{stat.label}</p>
           </div>
         ))}
       </div>
-    </div>
   </section>
 
   <!-- Chambres -->
