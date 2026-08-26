@@ -1,205 +1,70 @@
-import React, { useState, useEffect } from 'react';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GalerieGrid from '../components/GalerieGrid.jsx';
+---
 
-// NOUVEAU : Un tableau d'images avec des balises "alt" ultra-optimisées pour le SEO local
-const images = [
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496846/Extrtiot_gjxge4.png", alt: "Vue extérieure du Gîte de l'Ormoy, location de vacances 4 étoiles avec grand jardin en Sologne" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496829/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--4-min_ks62ta.jpg", alt: "Façade de la Maison de Gardien restaurée, gîte de charme près de Bourges et Vierzon" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496827/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--12-min_txmvr9.jpg", alt: "Chambre principale lumineuse et confortable du gîte 4 étoiles, hébergement pour 6 personnes dans le Cher" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496825/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--7-min_lwdl1c.jpg", alt: "Espace de vie chaleureux et climatisé, idéal pour un séjour en famille en région Centre-Val de Loire" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496824/-min_arzzxi.jpg", alt: "Décoration soignée et caractère authentique de notre location saisonnière à Saint-Laurent" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496824/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--2-min_d7q72t.jpg", alt: "Salon spacieux avec vue sur la nature, gîte haut de gamme proche des Châteaux de la Loire" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496824/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--5-min_r1rhsh.jpg", alt: "Véranda lumineuse ouvrant sur le parc boisé du Château de l'Ormoy" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496823/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--6-min_ubvych.jpg", alt: "Cuisine moderne et entièrement équipée pour vos vacances en Berry" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496823/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--8-min_zqfv9u.jpg", alt: "Deuxième chambre double avec literie de qualité, gîte paisible en pleine nature" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496822/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--11-min_qpwouh.jpg", alt: "Salle de bain contemporaine et fonctionnelle de notre hébergement de tourisme 4 étoiles" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496822/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--9-min_xuheyg.jpg", alt: "Terrasse aménagée pour vos repas en extérieur au cœur de la campagne berrichonne" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496821/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--13-min_ojckex.jpg", alt: "Vaste jardin arboré et clos, parfait pour se ressourcer lors de votre séjour en Sologne" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496821/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--10-min_njkvk2.jpg", alt: "Vue imprenable sur les marronniers centenaires du domaine de l'Ormoy" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496821/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--14-min_axmqnm.jpg", alt: "Charme de l'ancien et architecture traditionnelle de cette maison de vacances de caractère" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496819/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--min_yjpdiv.jpg", alt: "Environnement calme et verdoyant du Gîte de l'Ormoy, à proximité du vignoble de Sancerre" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496818/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--16-min_ripw4z.jpg", alt: "Troisième chambre confortable, location idéale pour les familles dans le département du Cher" },
-  { src: "https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496818/Gi%CC%82te_de_l_Ormoy_-_Photos_2023-Le_Gi%CC%82te_de_l_Ormoy--17-min_vdtfyt.jpg", alt: "Le domaine de l'Ormoy, un écrin de verdure pour un week-end ou des vacances d'exception" },
-];
+<BaseLayout
+  title="Galerie — Gîte de l'Ormoy"
+  description="Découvrez en images le Gîte de l'Ormoy : chambres, véranda, jardin et espaces extérieurs de ce meublé de tourisme 4 étoiles en Sologne."
+>
+  <!-- Hero -->
+  <section class="relative h-[55vh] min-h-[360px] overflow-hidden">
+    <img
+      src="https://res.cloudinary.com/dpgmwola2/image/upload/q_auto/f_auto/v1775496846/Extrtiot_gjxge4.png"
+      alt="Extérieur du Gîte de l'Ormoy, maison de caractère avec grand jardin près de Vierzon et Bourges"
+      class="absolute inset-0 w-full h-full object-cover object-center"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+    
+    <div class="relative z-10 h-full flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-12">
+      <h1 class="font-heading text-5xl md:text-7xl font-light text-white leading-[0.95]">
+        Galerie<br />
+        <span class="italic text-white/70">de l'Ormoy</span>
+      </h1>
+    </div>
+  </section>
 
-export default function GalerieGrid() {
-  const [selected, setSelected] = useState(null);
-  const selectedIdx = selected !== null ? images.findIndex(i => i.src === selected.src) : -1;
+  <!-- Intro -->
+  <section class="py-16 px-8 md:px-16 lg:px-24 border-b border-border">
+    <div class="max-w-6xl mx-auto flex items-end justify-between flex-wrap gap-6">
+      <p class="font-heading text-2xl md:text-3xl font-light text-foreground italic max-w-lg">
+        Chaque espace a été pensé pour allier authenticité et confort moderne.
+      </p>
+      <span class="font-body text-xs text-muted-foreground tracking-widest uppercase">17 photos</span>
+    </div>
+  </section>
 
-  const prev = (e) => {
-    e.stopPropagation();
-    setSelected(images[(selectedIdx - 1 + images.length) % images.length]);
-  };
-  const next = (e) => {
-    e.stopPropagation();
-    setSelected(images[(selectedIdx + 1) % images.length]);
-  };
+  <!-- Gallery -->
+  <section class="py-12 px-4 md:px-8 lg:px-12">
+    <GalerieGrid client:load />
+  </section>
 
-  useEffect(() => {
-    const handler = (e) => {
-      if (!selected) return;
-      if (e.key === 'ArrowLeft') setSelected(images[(selectedIdx - 1 + images.length) % images.length]);
-      if (e.key === 'ArrowRight') setSelected(images[(selectedIdx + 1) % images.length]);
-      if (e.key === 'Escape') setSelected(null);
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [selected, selectedIdx]);
-
-  useEffect(() => {
-    document.body.style.overflow = selected ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [selected]);
-
-  return (
-    <>
-      <div className="gallery-grid">
-        {images.map((img, i) => (
-          <div key={i} className="gallery-item" onClick={() => setSelected(img)}>
-            <img
-              src={img.src}
-              alt={img.alt}
-              loading={i < 6 ? 'eager' : 'lazy'}
-              decoding="async"
-              className="gallery-img"
-            />
-            <div className="gallery-overlay">
-              <span className="gallery-caption">{img.alt}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {selected && (
-        <div className="lightbox" onClick={() => setSelected(null)}>
-          <button className="lightbox-close" onClick={() => setSelected(null)}>
-            <X size={20} />
-          </button>
-          <div className="lightbox-counter">{selectedIdx + 1} / {images.length}</div>
-          <button className="lightbox-prev" onClick={prev}><ChevronLeft size={32} /></button>
-          <img
-            src={selected.src}
-            alt={selected.alt}
-            className="lightbox-img"
-            onClick={e => e.stopPropagation()}
-          />
-          <button className="lightbox-next" onClick={next}><ChevronRight size={32} /></button>
-          <div className="lightbox-caption">{selected.alt}</div>
-          <div className="lightbox-dots">
-            {images.map((_, i) => (
-              <button
-                key={i}
-                className={`lightbox-dot${i === selectedIdx ? ' active' : ''}`}
-                onClick={(e) => { e.stopPropagation(); setSelected(images[i]); }}
-              />
-            ))}
-          </div>
+  <!-- CTA -->
+  <section class="py-32 px-8 md:px-16 lg:px-24 bg-foreground">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
+      <h2 class="font-heading text-5xl md:text-6xl font-light text-white leading-[1.05]">
+        Envie de vivre<br />
+        <span class="italic text-white/70">cette expérience ?</span>
+      </h2>
+      <div class="space-y-8">
+        <p class="font-body text-white/50 text-sm leading-relaxed max-w-sm">
+          Réservez votre séjour et profitez de ce cadre d'exception en Sologne.
+        </p>
+        <div class="flex items-center gap-6">
+          <a
+            href="/reserver"
+            class="px-7 py-3 bg-white text-stone-900 font-body font-medium text-sm rounded-full hover:bg-white/90 transition-all duration-300 tracking-wide"
+          >
+            Réserver
+          </a>
+          <a
+            href="mailto:info@gitedelormoy.fr"
+            class="font-body text-white/40 text-sm hover:text-white transition-colors duration-300 tracking-wide underline underline-offset-4 decoration-white/20 hover:decoration-white/50"
+          >
+            Nous écrire
+          </a>
         </div>
-      )}
-
-      <style>{`
-        .gallery-grid {
-          columns: 3;
-          column-gap: 10px;
-          line-height: 0;
-        }
-        .gallery-item {
-          break-inside: avoid;
-          margin-bottom: 10px;
-          cursor: pointer;
-          overflow: hidden;
-          border-radius: 3px;
-          position: relative;
-          display: block;
-        }
-        .gallery-img {
-          width: 100%;
-          height: auto;
-          display: block;
-          transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .gallery-item:hover .gallery-img { transform: scale(1.05); }
-        .gallery-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(to top, rgba(20,35,25,0.55) 0%, transparent 55%);
-          opacity: 0;
-          transition: opacity 0.4s ease;
-          display: flex;
-          align-items: flex-end;
-          padding: 14px;
-        }
-        .gallery-item:hover .gallery-overlay { opacity: 1; }
-        .gallery-caption {
-          color: white;
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 13px;
-          font-style: italic;
-          letter-spacing: 0.05em;
-        }
-        .lightbox {
-          position: fixed;
-          inset: 0;
-          z-index: 9999;
-          background: rgba(8,12,10,0.97);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 60px 80px;
-        }
-        .lightbox-close {
-          position: absolute; top: 20px; right: 20px;
-          color: rgba(255,255,255,0.6);
-          background: none;
-          border: 1px solid rgba(255,255,255,0.15);
-          border-radius: 50%;
-          width: 40px; height: 40px;
-          display: flex; align-items: center; justify-content: center;
-          cursor: pointer; transition: all 0.2s;
-        }
-        .lightbox-close:hover { color: white; border-color: rgba(255,255,255,0.4); }
-        .lightbox-counter {
-          position: absolute; top: 26px; left: 50%; transform: translateX(-50%);
-          font-family: 'Inter', sans-serif; font-size: 10px;
-          letter-spacing: 0.25em; color: rgba(255,255,255,0.35); text-transform: uppercase;
-        }
-        .lightbox-prev, .lightbox-next {
-          position: absolute; top: 50%; transform: translateY(-50%);
-          color: rgba(255,255,255,0.45); background: none; border: none;
-          cursor: pointer; padding: 16px; transition: color 0.2s;
-        }
-        .lightbox-prev { left: 12px; }
-        .lightbox-next { right: 12px; }
-        .lightbox-prev:hover, .lightbox-next:hover { color: white; }
-        .lightbox-img {
-          max-width: 100%; max-height: 80vh; object-fit: contain;
-          border-radius: 2px; box-shadow: 0 50px 150px rgba(0,0,0,0.9);
-        }
-        .lightbox-caption {
-          position: absolute; bottom: 42px; left: 50%; transform: translateX(-50%);
-          font-family: 'Cormorant Garamond', serif; font-size: 15px;
-          font-style: italic; color: rgba(255,255,255,0.45); white-space: nowrap;
-        }
-        .lightbox-dots {
-          position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
-          display: flex; gap: 5px;
-        }
-        .lightbox-dot {
-          height: 4px; border-radius: 2px; background: rgba(255,255,255,0.25);
-          border: none; cursor: pointer; transition: all 0.3s ease; padding: 0; width: 16px;
-        }
-        .lightbox-dot.active { background: rgba(255,255,255,0.85); width: 28px; }
-        @media (max-width: 900px) {
-          .gallery-grid { columns: 2; }
-          .lightbox { padding: 50px; }
-        }
-        @media (max-width: 500px) {
-          .gallery-grid { columns: 1; }
-          .lightbox { padding: 50px 10px; }
-          .lightbox-prev { left: 2px; }
-          .lightbox-next { right: 2px; }
-        }
-      `}</style>
-    </>
-  );
-}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
