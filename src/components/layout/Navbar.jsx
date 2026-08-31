@@ -30,8 +30,6 @@ export default function Navbar() {
     setShowBanner(isClimatisationSeason());
     
     const handleScroll = () => {
-      // On déclenche l'animation plus tard (à 250px de défilement)
-      // pour laisser le temps de passer la photo sombre
       setScrolled(window.scrollY > 250);
     };
     
@@ -43,19 +41,19 @@ export default function Navbar() {
     <div className="fixed top-0 left-0 right-0 z-50">
       {/* Bandeau climatisation */}
       {showBanner && (
-        <div className="bg-primary text-primary-foreground text-center py-2 px-4">
-          <p className="font-body text-xs tracking-[0.15em] uppercase">
+        <div className="bg-primary text-primary-foreground text-center py-2 px-4 shadow-sm relative z-10">
+          <p className="font-body text-xs tracking-[0.15em] uppercase font-medium">
             ❄️ Gîte entièrement climatisé — Profitez d'une fraîcheur bienvenue cet été
           </p>
         </div>
       )}
 
       <nav
-        // On a passé la transition à duration-700 pour un fondu très élégant
         className={`transition-all duration-700 ${
           scrolled
             ? 'bg-background/98 backdrop-blur-md border-b border-border/50 py-3 shadow-sm'
-            : 'bg-transparent py-6'
+            // Ajout du dégradé linéaire pour protéger le texte sur la photo
+            : 'bg-gradient-to-b from-black/70 via-black/20 to-transparent py-6'
         }`}
       >
         <div className="max-w-7xl mx-auto px-8 md:px-16 flex items-center justify-between">
@@ -65,10 +63,11 @@ export default function Navbar() {
             <img
               src="https://res.cloudinary.com/dpgmwola2/image/upload/v1785775632/gite-de-l-ormoy-logo-big-Icon_gp9vcy.png"
               alt="Logo Gîte de l'Ormoy"
-              className="h-8 w-auto rounded-full group-hover:scale-105 transition-transform duration-300"
+              className="h-8 w-auto rounded-full group-hover:scale-105 transition-transform duration-300 shadow-sm"
             />
-            <span className={`font-heading text-base font-light tracking-widest transition-colors duration-700 ${
-              scrolled ? 'text-foreground' : 'text-white'
+            <span className={`font-heading text-base tracking-widest transition-colors duration-700 ${
+              // Remplacement de font-light par font-medium + ajout d'un drop-shadow
+              scrolled ? 'text-foreground font-medium' : 'text-white font-medium drop-shadow-md'
             }`}>
               Le Gîte de l'Ormoy
             </span>
@@ -80,24 +79,23 @@ export default function Navbar() {
               <a
                 key={link.path}
                 href={link.path}
-                className={`text-xs font-body tracking-[0.12em] uppercase transition-colors duration-700 ${
+                // Ajout de font-medium pour épaissir la police
+                className={`text-xs font-body font-medium tracking-[0.15em] uppercase transition-all duration-700 ${
                   currentPath === link.path
-                    ? scrolled ? 'text-primary' : 'text-white'
+                    ? scrolled ? 'text-primary' : 'text-white drop-shadow-md'
                     : scrolled
-                    ? 'text-foreground/50 hover:text-foreground'
-                    : 'text-white/60 hover:text-white'
+                    ? 'text-foreground/70 hover:text-foreground'
+                    : 'text-white/90 hover:text-white drop-shadow-md'
                 }`}
               >
                 {link.label}
               </a>
             ))}
+            
+            {/* Bouton Réserver plein en permanence avec effet de survol */}
             <a
               href="/reserver"
-              className={`text-xs font-body tracking-[0.12em] uppercase transition-all duration-500 px-5 py-2 rounded-full ${
-                scrolled
-                  ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                  : 'border border-white/40 text-white hover:bg-white/20'
-              }`}
+              className="text-xs font-body font-medium tracking-[0.12em] uppercase transition-all duration-300 px-6 py-2.5 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
             >
               Réserver
             </a>
@@ -106,7 +104,7 @@ export default function Navbar() {
           {/* Mobile toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className={`md:hidden p-2 transition-colors duration-700 ${scrolled ? 'text-foreground' : 'text-white'}`}
+            className={`md:hidden p-2 transition-colors duration-700 drop-shadow-md ${scrolled ? 'text-foreground' : 'text-white'}`}
             aria-label="Menu"
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -120,8 +118,8 @@ export default function Navbar() {
               <a
                 href="/"
                 onClick={() => setMobileOpen(false)}
-                className={`block font-heading text-2xl font-light transition-colors ${
-                  currentPath === '/' ? 'text-primary' : 'text-foreground/60'
+                className={`block font-heading text-2xl transition-colors ${
+                  currentPath === '/' ? 'text-primary font-medium' : 'text-foreground/80'
                 }`}
               >
                 Accueil
@@ -131,8 +129,8 @@ export default function Navbar() {
                   key={link.path}
                   href={link.path}
                   onClick={() => setMobileOpen(false)}
-                  className={`block font-heading text-2xl font-light transition-colors ${
-                    currentPath === link.path ? 'text-primary' : 'text-foreground/60'
+                  className={`block font-heading text-2xl transition-colors ${
+                    currentPath === link.path ? 'text-primary font-medium' : 'text-foreground/80'
                   }`}
                 >
                   {link.label}
@@ -141,7 +139,7 @@ export default function Navbar() {
               <div className="pt-4 border-t border-border">
                 <a
                   href="/reserver"
-                  className="inline-block px-6 py-3 bg-primary text-primary-foreground font-body text-xs tracking-[0.12em] uppercase rounded-full"
+                  className="inline-block px-6 py-3 bg-primary text-primary-foreground font-body font-medium text-xs tracking-[0.12em] uppercase rounded-full shadow-md"
                 >
                   Réserver
                 </a>
