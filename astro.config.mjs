@@ -4,7 +4,12 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   site: 'https://gitedelormoy.fr',
-  trailingSlash: 'never', // Force la suppression du slash final sur toutes les URL
+  trailingSlash: 'never',
+  redirects: {
+    '/photos': '/galerie',
+    '/reservation': '/reserver',
+    '/les-alentours': '/le-gite' // Redirige logiquement vers la présentation du gîte
+  },
   integrations: [
     react(),
     tailwind({ applyBaseStyles: false }),
