@@ -132,9 +132,18 @@ export default function ContactForm() {
         setRange({ from: selected.from, to: undefined });
         return;
       }
+      
+      // Calcul du nombre de nuits
+      const nuits = Math.round((selected.to - selected.from) / (1000 * 60 * 60 * 24));
+      
       if (isHauteSaison(selected.from)) {
-        const nuits = Math.round((selected.to - selected.from) / (1000 * 60 * 60 * 24));
         if (nuits < 6) {
+          setRange({ from: selected.from, to: undefined });
+          return;
+        }
+      } else {
+        // Règle ajoutée : 2 nuits minimum pour basse et moyenne saison
+        if (nuits < 2) {
           setRange({ from: selected.from, to: undefined });
           return;
         }
@@ -277,7 +286,8 @@ export default function ContactForm() {
               {range.from && !range.to && (
                 <p className="font-body text-xs text-muted-foreground">
                   Cliquez sur la date de départ
-                  {hauteSaisonInfo ? ` (min. 6 nuits)` : ''}
+                  {/* Mise à jour du texte indicatif : 2 nuits minimum si hors saison */}
+                  {hauteSaisonInfo ? ` (min. 6 nuits)` : ` (min. 2 nuits)`}
                 </p>
               )}
               {!range.from && (
